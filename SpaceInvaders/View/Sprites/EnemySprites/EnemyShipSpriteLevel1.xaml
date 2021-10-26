@@ -12,7 +12,7 @@
     Width="50">
 
     <UserControl.Resources>
-        <SolidColorBrush x:Key="EnemyShipColor" Color="DeepSkyBlue"/>
+        <SolidColorBrush x:Key="EnemyShipColor" Color="LightSlateGray"/>
     </UserControl.Resources>
 
     <Canvas>

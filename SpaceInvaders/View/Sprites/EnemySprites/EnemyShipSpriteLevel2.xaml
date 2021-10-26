@@ -12,10 +12,11 @@
     Width="50">
 
     <UserControl.Resources>
-        <SolidColorBrush x:Key="EnemyShipColor" Color="Lime"/>
+        <SolidColorBrush x:Key="EnemyShipColor" Color="lime"/>
     </UserControl.Resources>
 
     <Canvas>
+        <local:EnemyShipSpriteLevel1/>
         <Rectangle Width="34" Height="10" Canvas.Top="0" Fill="{StaticResource EnemyShipColor}" Canvas.Left="8"/>
         <Rectangle Width="40" Height="5"  Canvas.Top="10" Canvas.Left="5" Fill="{StaticResource EnemyShipColor}"/>
         <Rectangle Width="8" Height="13" Canvas.Top="10" Fill="{StaticResource EnemyShipColor}"/>
