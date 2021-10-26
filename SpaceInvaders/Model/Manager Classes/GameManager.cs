@@ -1,4 +1,5 @@
 ﻿using System;
+using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 
 namespace SpaceInvaders.Model.Manager_Classes
@@ -10,19 +11,21 @@ namespace SpaceInvaders.Model.Manager_Classes
 
         private readonly EnemyShipManager enemyShipManager;
         private readonly PlayerShipManager playerShipManager;
+
+        public Canvas BackgroundCanvas { get; }
+
         private readonly BulletManager bulletManager;
 
+        public delegate void UpdateScoreHandler(int score);
+
+        public event UpdateScoreHandler ScoreUpdated;
+
+        public delegate void GameEndedHandler();
+
+        public event GameEndedHandler GameEnded;
         #endregion
 
         #region Properties
-
-        /// <summary>
-        ///     Gets the player's score.
-        /// </summary>
-        /// <value>
-        ///     The player's score.
-        /// </value>
-        public int PlayerScore => this.enemyShipManager.ScoreValueOfDestroyedShips;
 
         /// <summary>
         ///     Gets a value indicating whether [did player win].
@@ -40,6 +43,7 @@ namespace SpaceInvaders.Model.Manager_Classes
         /// </value>
         public bool DidPlayerLose => this.playerShipManager.WasPlayerHit;
 
+        private DispatcherTimer timer;
         #endregion
 
         #region Constructors
@@ -59,6 +63,11 @@ namespace SpaceInvaders.Model.Manager_Classes
             this.bulletManager = new BulletManager(background);
             this.enemyShipManager = new EnemyShipManager(background);
             this.playerShipManager = new PlayerShipManager(background);
+            this.BackgroundCanvas = background;
+
+            this.createTimer();
+
+            this.enemyShipManager.ScoreUpdated += new EnemyShipManager.ScoreUpdatedHandler(this.onUpdateScoreEvent);
         }
 
         #endregion
@@ -98,17 +107,6 @@ namespace SpaceInvaders.Model.Manager_Classes
             this.enemyShipManager.TakeAStep();
         }
 
-        /// <summary>
-        ///     This method executes the necessary methods for every game tick.
-        /// </summary>
-        public void GameTick()
-        {
-            this.checkForCollisions();
-            this.makeEnemyShipsTakeAStep();
-            this.fireEnemyShips();
-            this.updateBullets();
-        }
-
         private void fireEnemyShips()
         {
             this.bulletManager.addBullet(this.enemyShipManager.fireEnemyShips());
@@ -140,6 +138,48 @@ namespace SpaceInvaders.Model.Manager_Classes
             return this.bulletManager.CheckForCollisionsWithEnemyShips(this.enemyShipManager.EnemyShips);
         }
 
+        private void createTimer()
+        {
+            this.timer = new DispatcherTimer();
+            this.timer.Tick += this.timerTick;
+            this.timer.Interval = new TimeSpan(0, 0, 0, 0, 55);
+            this.timer.Start();
+        }
+
+        private void timerTick(object sender, object e)
+        {
+            this.checkForCollisions();
+            this.makeEnemyShipsTakeAStep();
+            this.fireEnemyShips();
+            this.updateBullets();
+
+            if (this.isGameOver())
+            {
+                this.timer.Stop();
+                this.onGamedEndedEvent();
+            }
+        }
+
+        private bool isGameOver()
+        {
+            return this.DidPlayerWin || this.DidPlayerLose;
+        }
+
+        private void onUpdateScoreEvent(int score)
+        {
+            if (this.ScoreUpdated != null)
+            {
+                this.ScoreUpdated(score);
+            }
+        }
+
+        private void onGamedEndedEvent()
+        {
+            if (this.GameEnded != null)
+            {
+                this.GameEnded();
+            }
+        }
         #endregion
     }
 }

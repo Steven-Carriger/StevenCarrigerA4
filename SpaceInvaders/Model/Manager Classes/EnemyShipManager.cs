@@ -53,6 +53,9 @@ namespace SpaceInvaders.Model.Manager_Classes
 
         private int MaxNumberOfEnemyShips => LimitPerRow * NumberOfRows;
 
+        public delegate void ScoreUpdatedHandler(int score);
+
+        public event ScoreUpdatedHandler ScoreUpdated;
         #endregion
 
         #region Constructors
@@ -243,7 +246,16 @@ namespace SpaceInvaders.Model.Manager_Classes
                 {
                     this.ScoreValueOfDestroyedShips += (int)this.EnemyShips[shipIndex].ScoreValue;
                     this.EnemyShips.Remove(this.EnemyShips[shipIndex]);
+                    this.onScoreUpdated();
                 }
+            }
+        }
+
+        private void onScoreUpdated()
+        {
+            if (this.ScoreUpdated != null)
+            {
+                this.ScoreUpdated(this.ScoreValueOfDestroyedShips);
             }
         }
 

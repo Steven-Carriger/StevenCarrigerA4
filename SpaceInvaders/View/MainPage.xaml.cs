@@ -27,8 +27,6 @@ namespace SpaceInvaders.View
         /// </summary>
         public const double ApplicationWidth = 640;
 
-        private DispatcherTimer timer;
-
         private readonly GameManager gameManager;
 
         #endregion
@@ -50,7 +48,9 @@ namespace SpaceInvaders.View
 
             this.gameManager = new GameManager(this.theCanvas);
             this.toggleEndOfGameTextBoxes();
-            this.createTimer();
+
+            this.gameManager.ScoreUpdated += new GameManager.UpdateScoreHandler(this.updateScore);
+            this.gameManager.GameEnded += new GameManager.GameEndedHandler(this.endGame);
         }
 
         #endregion
@@ -72,23 +72,9 @@ namespace SpaceInvaders.View
             }
         }
 
-        private void createTimer()
+        private void updateScore(int score)
         {
-            this.timer = new DispatcherTimer();
-            this.timer.Tick += this.timerTick;
-            this.timer.Interval = new TimeSpan(0, 0, 0, 0, 55);
-            this.timer.Start();
-        }
-
-        private void timerTick(object sender, object e)
-        {
-            this.gameManager.GameTick();
-            this.updateScore();
-            if (this.isGameOver())
-            {
-                this.timer.Stop();
-                this.endGame();
-            }
+            this.ScoreLabel.Text = $"Score: {score}";
         }
 
         private void endGame()
@@ -97,8 +83,8 @@ namespace SpaceInvaders.View
             this.toggleEndOfGameTextBoxes();
             this.ScoreLabel.Visibility = Visibility.Collapsed;
             this.GameStatTextBlock.Text = this.gameManager.DidPlayerLose
-                ? $"You Lost, better luck next time!{Environment.NewLine}Your Score was: {this.gameManager.PlayerScore}"
-                : $"Congratulations, you won!{Environment.NewLine}Your Score is: {this.gameManager.PlayerScore}";
+                ? $"You Lost, better luck next time!{Environment.NewLine}Your {this.ScoreLabel.Text}"
+                : $"Congratulations, you won!{Environment.NewLine}Your {this.ScoreLabel.Text}";
         }
 
         private void toggleShipsVisibility()
@@ -109,16 +95,6 @@ namespace SpaceInvaders.View
             }
         }
 
-        private bool isGameOver()
-        {
-            return this.gameManager.DidPlayerWin || this.gameManager.DidPlayerLose;
-        }
-
-        private void updateScore()
-        {
-            this.ScoreLabel.Text = $"Score: {this.gameManager.PlayerScore}";
-        }
-
         private void coreWindowOnKeyDown(CoreWindow sender, KeyEventArgs args)
         {
             switch (args.VirtualKey)
@@ -127,6 +103,12 @@ namespace SpaceInvaders.View
                     this.gameManager.MovePlayerShipLeft();
                     break;
                 case VirtualKey.Right:
+                    this.gameManager.MovePlayerShipRight();
+                    break;
+                case VirtualKey.A:
+                    this.gameManager.MovePlayerShipLeft();
+                    break;
+                case VirtualKey.D:
                     this.gameManager.MovePlayerShipRight();
                     break;
                 case VirtualKey.Space:
