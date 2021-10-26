@@ -82,7 +82,7 @@ namespace SpaceInvaders.View
 
         private void timerTick(object sender, object e)
         {
-            this.gameManager.GameTick(this.theCanvas);
+            this.gameManager.GameTick();
             this.updateScore();
             if (this.isGameOver())
             {
@@ -130,7 +130,7 @@ namespace SpaceInvaders.View
                     this.gameManager.MovePlayerShipRight();
                     break;
                 case VirtualKey.Space:
-                    this.gameManager.FirePlayerShipsGun(this.theCanvas);
+                    this.gameManager.FirePlayerShipsGun();
                     break;
             }
         }

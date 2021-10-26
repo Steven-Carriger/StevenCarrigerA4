@@ -16,10 +16,11 @@ namespace SpaceInvaders.Model.EnemyShips
         /// </summary>
         public EnemyShipLevel3()
         {
-            Sprite = new EnemyShipSpriteLevel3();
-            ScoreValue = ScoreValue.AdvanceValue;
-            ShipLevel = ShipLevel.LevelThree;
-            ShipRow = Row.TopRow;
+            this.Sprite = new EnemyShipSpriteLevel3();
+            this.ScoreValue = ScoreValue.AdvanceValue;
+            this.ShipLevel = ShipLevel.LevelThree;
+            this.ShipRow = Row.TopRow;
+            this.CanFire = true;
         }
 
         #endregion

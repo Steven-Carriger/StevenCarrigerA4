@@ -1,4 +1,5 @@
-﻿using System.Collections.ObjectModel;
+﻿using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using Windows.UI.Xaml.Controls;
 using SpaceInvaders.Model.EnemyShips;
 using SpaceInvaders.Model.Enum_Classes;
@@ -10,8 +11,9 @@ namespace SpaceInvaders.Model.Manager_Classes
     {
         #region Properties
 
-        private Collection<Bullet> Bullets { get; }
+        private ICollection<Bullet> Bullets { get; }
 
+        private Canvas BackgroundCanvas { get; }
         #endregion
 
         #region Constructors
@@ -19,9 +21,10 @@ namespace SpaceInvaders.Model.Manager_Classes
         /// <summary>
         ///     Initializes a new instance of the <see cref="BulletManager" /> class.
         /// </summary>
-        public BulletManager()
+        public BulletManager(Canvas background)
         {
             this.Bullets = new Collection<Bullet>();
+            this.BackgroundCanvas = background;
         }
 
         #endregion
@@ -31,7 +34,7 @@ namespace SpaceInvaders.Model.Manager_Classes
         /// <summary>
         ///     Takes a step.
         /// </summary>
-        public void takeAStep()
+        public void TakeAStep()
         {
             this.moveBullets();
         }
@@ -39,16 +42,15 @@ namespace SpaceInvaders.Model.Manager_Classes
         /// <summary>
         ///     checks if the players bullet went off screen.
         /// </summary>
-        /// <param name="background">The background.</param>
         /// <returns>true if the players bullet went off the screen and was removed, false otherwise</returns>
-        public bool RemovePlayersOffScreenBullet(Canvas background)
+        public bool RemovePlayersOffScreenBullet()
         {
             foreach (var bullet in this.Bullets)
             {
-                if (bullet.Y <= background.MinHeight)
+                if (bullet.Y <= this.BackgroundCanvas.MinHeight)
                 {
                     bullet.IsDestroyed = true;
-                    background.Children.Remove(bullet.Sprite);
+                    this.BackgroundCanvas.Children.Remove(bullet.Sprite);
                     this.Bullets.Remove(bullet);
                     return true;
                 }
@@ -60,16 +62,15 @@ namespace SpaceInvaders.Model.Manager_Classes
         /// <summary>
         ///     removes the enemies bullet if it goes off screen.
         /// </summary>
-        /// <param name="background">The background.</param>
         /// <returns>true if an enemies bullet went off the screen and was removed. false otherwise</returns>
-        public bool RemoveEnemiesOffScreenBullet(Canvas background)
+        public bool RemoveEnemiesOffScreenBullet()
         {
             foreach (var bullet in this.Bullets)
             {
-                if (bullet.Y >= background.Height)
+                if (bullet.Y >= this.BackgroundCanvas.Height)
                 {
                     bullet.IsDestroyed = true;
-                    background.Children.Remove(bullet.Sprite);
+                    this.BackgroundCanvas.Children.Remove(bullet.Sprite);
                     this.Bullets.Remove(bullet);
                     return true;
                 }
@@ -90,13 +91,12 @@ namespace SpaceInvaders.Model.Manager_Classes
         ///     Adds the bullet to the designated canvas.
         /// </summary>
         /// <param name="bullet">The bullet to add.</param>
-        /// <param name="background">The background to place it on.</param>
-        public void addBullet(Bullet bullet, Canvas background)
+        public void addBullet(Bullet bullet)
         {
             if (bullet != null)
             {
                 this.Bullets.Add(bullet);
-                background.Children.Add(bullet.Sprite);
+                this.BackgroundCanvas.Children.Add(bullet.Sprite);
             }
         }
 
@@ -104,9 +104,8 @@ namespace SpaceInvaders.Model.Manager_Classes
         ///     Checks for collision with player ship.
         /// </summary>
         /// <param name="playerShip">The player ship.</param>
-        /// <param name="background">The background.</param>
         /// <returns>true if the player ship is destroyed, false otherwise.</returns>
-        public bool CheckForCollisionWithPlayerShip(GameObject playerShip, Canvas background)
+        public bool CheckForCollisionWithPlayerShip(GameObject playerShip)
         {
             foreach (var bullet in this.Bullets)
             {
@@ -117,8 +116,8 @@ namespace SpaceInvaders.Model.Manager_Classes
                         bullet.IsDestroyed = true;
                         playerShip.IsDestroyed = true;
 
-                        background.Children.Remove(playerShip.Sprite);
-                        background.Children.Remove(bullet.Sprite);
+                        this.BackgroundCanvas.Children.Remove(playerShip.Sprite);
+                        this.BackgroundCanvas.Children.Remove(bullet.Sprite);
                         return true;
                     }
                 }
@@ -136,9 +135,8 @@ namespace SpaceInvaders.Model.Manager_Classes
         ///     Checks for collisions with enemy ships.
         /// </summary>
         /// <param name="enemyShips">The enemy ships.</param>
-        /// <param name="background">The background.</param>
         /// <returns>true if an enemy ship was destroyed, false otherwise.</returns>
-        public bool CheckForCollisionsWithEnemyShips(Collection<EnemyShipLevel1> enemyShips, Canvas background)
+        public bool CheckForCollisionsWithEnemyShips(ICollection<EnemyShip> enemyShips)
         {
             foreach (var ship in enemyShips)
             {
@@ -151,8 +149,8 @@ namespace SpaceInvaders.Model.Manager_Classes
                             bullet.IsDestroyed = true;
                             ship.IsDestroyed = true;
 
-                            background.Children.Remove(ship.Sprite);
-                            background.Children.Remove(bullet.Sprite);
+                            this.BackgroundCanvas.Children.Remove(ship.Sprite);
+                            this.BackgroundCanvas.Children.Remove(bullet.Sprite);
 
                             this.Bullets.Remove(bullet);
                             return true;

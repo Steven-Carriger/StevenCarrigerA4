@@ -16,10 +16,10 @@ namespace SpaceInvaders.Model.EnemyShips
         /// </summary>
         public EnemyShipLevel2()
         {
-            Sprite = new EnemyShipSpriteLevel2();
-            ScoreValue = ScoreValue.AverageValue;
-            ShipLevel = ShipLevel.LevelTwo;
-            ShipRow = Row.MiddleRow;
+            this.Sprite = new EnemyShipSpriteLevel2();
+            this.ScoreValue = ScoreValue.AverageValue;
+            this.ShipLevel = ShipLevel.LevelTwo;
+            this.ShipRow = Row.MiddleRow;
         }
 
         #endregion

@@ -37,6 +37,8 @@ namespace SpaceInvaders.Model.Manager_Classes
         /// </value>
         public int ScoreValueOfDestroyedShips { get; set; }
 
+        private Canvas BackgroundCanvas { get; }
+
         /// <summary> Gets a value indicating whether [are all enemy ships destroyed]. </summary>
         /// <value> <c>true</c> if [all ships are destroyed]; otherwise, <c>false</c>. </value>
         public bool AreAllShipsDestroyed => this.EnemyShips.Count == 0;
@@ -47,7 +49,7 @@ namespace SpaceInvaders.Model.Manager_Classes
         /// <value>
         ///     The enemy ships.
         /// </value>
-        public Collection<EnemyShipLevel1> EnemyShips { get; }
+        public Collection<EnemyShip> EnemyShips { get; }
 
         private int MaxNumberOfEnemyShips => LimitPerRow * NumberOfRows;
 
@@ -62,10 +64,11 @@ namespace SpaceInvaders.Model.Manager_Classes
         /// </summary>
         public EnemyShipManager(Canvas background)
         {
-            this.EnemyShips = new Collection<EnemyShipLevel1>();
+            this.EnemyShips = new Collection<EnemyShip>();
             this.ScoreValueOfDestroyedShips = 0;
+            this.BackgroundCanvas = background;
             this.addEnemies();
-            this.placeEnemyShips(background);
+            this.placeEnemyShips();
         }
 
         #endregion
@@ -211,14 +214,14 @@ namespace SpaceInvaders.Model.Manager_Classes
             }
         }
 
-        private void placeEnemyShips(Canvas background)
+        private void placeEnemyShips()
         {
-            var startingXCord = background.Width / HalfOfRowLimit - EnemyShipWidth * HalfOfRowLimit;
+            var startingXCord = this.BackgroundCanvas.Width / HalfOfRowLimit - EnemyShipWidth * HalfOfRowLimit;
             var shipsPlaced = 0;
 
             foreach (var ship in this.EnemyShips)
             {
-                background.Children.Add(ship.Sprite);
+                this.BackgroundCanvas.Children.Add(ship.Sprite);
 
                 ship.X = startingXCord + (ship.Width + SpaceBetweenShips) * shipsPlaced;
                 ship.Y = (int)ship.ShipRow;

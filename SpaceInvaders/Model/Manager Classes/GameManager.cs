@@ -56,7 +56,7 @@ namespace SpaceInvaders.Model.Manager_Classes
                 throw new ArgumentNullException(nameof(background));
             }
 
-            this.bulletManager = new BulletManager();
+            this.bulletManager = new BulletManager(background);
             this.enemyShipManager = new EnemyShipManager(background);
             this.playerShipManager = new PlayerShipManager(background);
         }
@@ -88,10 +88,9 @@ namespace SpaceInvaders.Model.Manager_Classes
         /// <summary>
         ///     Fires the player ships gun.
         /// </summary>
-        /// <param name="background">The background.</param>
-        public void FirePlayerShipsGun(Canvas background)
+        public void FirePlayerShipsGun()
         {
-            this.bulletManager.addBullet(this.playerShipManager.FirePlayerShip(), background);
+            this.bulletManager.addBullet(this.playerShipManager.FirePlayerShip());
         }
 
         private void makeEnemyShipsTakeAStep()
@@ -102,44 +101,43 @@ namespace SpaceInvaders.Model.Manager_Classes
         /// <summary>
         ///     This method executes the necessary methods for every game tick.
         /// </summary>
-        /// <param name="background">The background.</param>
-        public void GameTick(Canvas background)
+        public void GameTick()
         {
-            this.checkForCollisions(background);
+            this.checkForCollisions();
             this.makeEnemyShipsTakeAStep();
-            this.fireEnemyShips(background);
-            this.updateBullets(background);
+            this.fireEnemyShips();
+            this.updateBullets();
         }
 
-        private void fireEnemyShips(Canvas background)
+        private void fireEnemyShips()
         {
-            this.bulletManager.addBullet(this.enemyShipManager.fireEnemyShips(), background);
+            this.bulletManager.addBullet(this.enemyShipManager.fireEnemyShips());
         }
 
-        private void updateBullets(Canvas background)
+        private void updateBullets()
         {
-            this.bulletManager.takeAStep();
-            if (this.bulletManager.RemovePlayersOffScreenBullet(background))
+            this.bulletManager.TakeAStep();
+            if (this.bulletManager.RemovePlayersOffScreenBullet())
             {
                 this.playerShipManager.TogglePlayerShipsGun();
             }
 
-            this.bulletManager.RemoveEnemiesOffScreenBullet(background);
+            this.bulletManager.RemoveEnemiesOffScreenBullet();
         }
 
-        private void checkForCollisions(Canvas background)
+        private void checkForCollisions()
         {
-            this.bulletManager.CheckForCollisionWithPlayerShip(this.playerShipManager.PlayerShip, background);
+            this.bulletManager.CheckForCollisionWithPlayerShip(this.playerShipManager.PlayerShip);
 
-            if (this.isAnEnemyShipHit(background))
+            if (this.isAnEnemyShipHit())
             {
                 this.playerShipManager.TogglePlayerShipsGun();
             }
         }
 
-        private bool isAnEnemyShipHit(Canvas background)
+        private bool isAnEnemyShipHit()
         {
-            return this.bulletManager.CheckForCollisionsWithEnemyShips(this.enemyShipManager.EnemyShips, background);
+            return this.bulletManager.CheckForCollisionsWithEnemyShips(this.enemyShipManager.EnemyShips);
         }
 
         #endregion

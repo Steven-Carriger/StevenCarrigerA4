@@ -11,6 +11,8 @@ namespace SpaceInvaders.Model.Manager_Classes
         private const int LeftBackgroundBoundary = 0;
         private readonly double backgroundWidth;
 
+        public Canvas BackgroundCanvas { get; }
+
         #endregion
 
         #region Properties
@@ -44,19 +46,20 @@ namespace SpaceInvaders.Model.Manager_Classes
         /// <exception cref="System.ArgumentNullException"></exception>
         public PlayerShipManager(Canvas background)
         {
-            this.backgroundWidth = background.Width;
-            this.createPlayerShip(background);
-            this.placePlayerNearTheBottomCenter(background);
+            this.BackgroundCanvas = background;
+            this.backgroundWidth = this.BackgroundCanvas.Width;
+            this.createPlayerShip();
+            this.placePlayerNearTheBottomCenter();
         }
 
         #endregion
 
         #region Methods
 
-        private void createPlayerShip(Canvas background)
+        private void createPlayerShip()
         {
             this.PlayerShip = new PlayerShip();
-            background.Children.Add(this.PlayerShip.Sprite);
+            this.BackgroundCanvas.Children.Add(this.PlayerShip.Sprite);
         }
 
         /// <summary>
@@ -121,10 +124,10 @@ namespace SpaceInvaders.Model.Manager_Classes
             return LeftBackgroundBoundary < this.PlayerShip.X - this.PlayerShip.SpeedX;
         }
 
-        private void placePlayerNearTheBottomCenter(Canvas background)
+        private void placePlayerNearTheBottomCenter()
         {
-            this.PlayerShip.X = background.Width / 2 - this.PlayerShip.Width / 2.0;
-            this.PlayerShip.Y = background.Height - this.PlayerShip.Height - PlayerShipBottomOffset;
+            this.PlayerShip.X = this.BackgroundCanvas.Width / 2 - this.PlayerShip.Width / 2.0;
+            this.PlayerShip.Y = this.BackgroundCanvas.Height - this.PlayerShip.Height - PlayerShipBottomOffset;
         }
 
         #endregion

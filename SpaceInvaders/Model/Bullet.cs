@@ -62,17 +62,6 @@ namespace SpaceInvaders.Model
             }
         }
 
-        /// <summary>
-        ///     Checks if the bullet is colliding with another object.
-        /// </summary>
-        /// <param name="otherObject">The other object.</param>
-        /// <returns>true if the bullet hits the other ship, false otherwise</returns>
-        public bool collidesWith(GameObject otherObject)
-        {
-            return X < otherObject.X + otherObject.Width && X + Width > otherObject.X &&
-                   Y < otherObject.Y + otherObject.Height && Y + Height > otherObject.Y;
-        }
-
         private double xCenteredOnTheShip(double xValue, double shipsWidth)
         {
             return xValue + shipsWidth / 2;
