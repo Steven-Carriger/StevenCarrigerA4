@@ -1,0 +1,30 @@
+﻿<local:BaseSprite
+    x:Class="SpaceInvaders.View.Sprites.PlayerShipSprite"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:SpaceInvaders.View.Sprites"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    d:DesignHeight="33"
+    d:DesignWidth="50"
+    Height="33"
+    Width="50">
+
+    <UserControl.Resources>
+        <SolidColorBrush x:Key="PlayerShipColor" Color="White"/>
+    </UserControl.Resources>
+
+    <Canvas>
+        <Rectangle Width="38" Height="13" Canvas.Top="10" Fill="{StaticResource PlayerShipColor}" Canvas.Left="6"/>
+        <Rectangle Width="6" Height="10" Canvas.Left="22" Fill="{StaticResource PlayerShipColor}"/>
+        <Rectangle Width="6" Height="10" Fill="{StaticResource PlayerShipColor}" Canvas.Top="18"/>
+        <Rectangle Width="6" Height="10" Canvas.Left="44" Fill="{StaticResource PlayerShipColor}" Canvas.Top="18"/>
+        <Rectangle Width="4" Height="5" Canvas.Left="45" Fill="Orange" Canvas.Top="28"/>
+        <Rectangle Width="4" Height="5" Canvas.Left="1" Fill="Orange" Canvas.Top="28"/>
+        <Rectangle Width="6" Height="10" Canvas.Left="22" Fill="{StaticResource PlayerShipColor}" Canvas.Top="18"/>
+        <Rectangle Width="4" Height="5" Canvas.Left="23" Fill="Orange" Canvas.Top="28"/>
+        <Rectangle Width="6" Height="10" Canvas.Left="33" Fill="{StaticResource PlayerShipColor}" Canvas.Top="5"/>
+        <Rectangle Width="6" Height="10" Canvas.Left="11" Fill="{StaticResource PlayerShipColor}" Canvas.Top="5"/>
+    </Canvas>
+</local:BaseSprite>

@@ -1,0 +1,9 @@
+﻿Functionality: all functionality is implemented from what I can tell in the requirements.
+
+Extra Functionality: Added extra functionality to where the enemy ships will move down after one iteration of moving right and left.
+
+Bugs: no bugs found when I tested my code.
+
+To change the rate at which the enemies may shoot bullets, go to the EnemyShipManager class in Manager Classes.
+the default chance is a 0 out of a 0-99 range (because of nextInt being exclusive on the second parameter) as I found that to be the "sweet spot" 
+in testing the code without too many bullets being fired.
