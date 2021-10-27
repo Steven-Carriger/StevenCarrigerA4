@@ -161,6 +161,11 @@ namespace SpaceInvaders.Model.Manager_Classes
                 {
                     enemyShip.IsDestroyed = true;
                     bullet.IsDestroyed = true;
+
+                    this.BackgroundCanvas.Children.Remove(enemyShip.Sprite);
+                    this.BackgroundCanvas.Children.Remove(bullet.Sprite);
+
+                    this.Bullets.Remove(bullet);
                     return true;
                 }
             }
