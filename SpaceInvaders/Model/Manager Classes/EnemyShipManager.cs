@@ -53,8 +53,15 @@ namespace SpaceInvaders.Model.Manager_Classes
 
         private int MaxNumberOfEnemyShips => LimitPerRow * NumberOfRows;
 
+        /// <summary>
+        /// a function that handles when the score is updated.
+        /// </summary>
+        /// <param name="score">The score.</param>
         public delegate void ScoreUpdatedHandler(int score);
 
+        /// <summary>
+        /// Occurs when [score updated].
+        /// </summary>
         public event ScoreUpdatedHandler ScoreUpdated;
         #endregion
 

@@ -2,6 +2,10 @@
 
 namespace SpaceInvaders.Model.EnemyShips
 {
+    /// <summary>
+    /// EnemyShip base class
+    /// </summary>
+    /// <seealso cref="SpaceInvaders.Model.GameObject" />
     public abstract class EnemyShip : GameObject
     {
         #region Data members

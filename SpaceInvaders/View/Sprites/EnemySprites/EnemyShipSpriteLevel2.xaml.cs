@@ -25,6 +25,9 @@ namespace SpaceInvaders.View.Sprites
     /// <seealso cref="Windows.UI.Xaml.Markup.IComponentConnector2" />
     public sealed partial class EnemyShipSpriteLevel2
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="EnemyShipSpriteLevel2"/> class.
+        /// </summary>
         public EnemyShipSpriteLevel2()
         {
             this.InitializeComponent();

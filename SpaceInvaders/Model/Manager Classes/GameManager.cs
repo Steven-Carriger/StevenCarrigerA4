@@ -12,16 +12,35 @@ namespace SpaceInvaders.Model.Manager_Classes
         private readonly EnemyShipManager enemyShipManager;
         private readonly PlayerShipManager playerShipManager;
 
+        /// <summary>
+        /// Gets the background canvas.
+        /// </summary>
+        /// <value>
+        /// The background canvas.
+        /// </value>
         public Canvas BackgroundCanvas { get; }
 
         private readonly BulletManager bulletManager;
 
+        /// <summary>
+        /// a function that handles when the score is updated
+        /// </summary>
+        /// <param name="score">The score.</param>
         public delegate void UpdateScoreHandler(int score);
 
+        /// <summary>
+        /// Occurs when [score updated].
+        /// </summary>
         public event UpdateScoreHandler ScoreUpdated;
 
+        /// <summary>
+        /// a function that Handles when the game is over
+        /// </summary>
         public delegate void GameEndedHandler();
 
+        /// <summary>
+        /// Occurs when [game ended].
+        /// </summary>
         public event GameEndedHandler GameEnded;
         #endregion
 

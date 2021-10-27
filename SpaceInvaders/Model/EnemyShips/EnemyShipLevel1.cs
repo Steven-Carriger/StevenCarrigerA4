@@ -6,7 +6,7 @@ namespace SpaceInvaders.Model.EnemyShips
     /// <summary>
     ///     The most basic enemy ship class, EnemyShipLevel1.
     /// </summary>
-    /// <seealso cref="SpaceInvaders.Model.GameObject" />
+    /// <seealso cref="SpaceInvaders.Model.EnemyShip" />
     public class EnemyShipLevel1 : EnemyShip
     {
         #region Constructors
