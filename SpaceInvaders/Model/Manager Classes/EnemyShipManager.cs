@@ -212,15 +212,15 @@ namespace SpaceInvaders.Model.Manager_Classes
         {
             if (enemyRow == Row.BottomRow)
             {
-                this.EnemyShips.Add(new EnemyShipLevel1());
+                this.EnemyShips.Add(EnemyShipFactory.MakeEnemyShip(ShipLevel.LevelOne));
             }
             else if (enemyRow == Row.MiddleRow)
             {
-                this.EnemyShips.Add(new EnemyShipLevel2());
+                this.EnemyShips.Add(EnemyShipFactory.MakeEnemyShip(ShipLevel.LevelTwo));
             }
             else if (enemyRow == Row.TopRow)
             {
-                this.EnemyShips.Add(new EnemyShipLevel3());
+                this.EnemyShips.Add(EnemyShipFactory.MakeEnemyShip(ShipLevel.LevelThree));
             }
         }
 

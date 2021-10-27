@@ -120,6 +120,7 @@
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
     <Compile Include="Model\Bullet.cs" />
+    <Compile Include="Model\EnemyShips\EnemyShipFactory.cs" />
     <Compile Include="Model\EnemyShips\EnemyShip.cs" />
     <Compile Include="Model\Enum Classes\ShipType.cs" />
     <Compile Include="Model\Manager Classes\BulletManager.cs" />
