@@ -17,6 +17,7 @@ namespace SpaceInvaders.Model.EnemyShips
         public EnemyShipLevel1()
         {
             this.Sprite = new EnemyShipSpriteLevel1();
+            this.ShipLevel = ShipLevel.LevelOne;
             this.ShipRow = Row.FirstRow;
         }
 

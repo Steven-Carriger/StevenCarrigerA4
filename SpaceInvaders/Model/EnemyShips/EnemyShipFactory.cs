@@ -19,7 +19,6 @@ namespace SpaceInvaders.Model.EnemyShips
         /// <returns>The enemy ship</returns>
         public static EnemyShip MakeEnemyShip(ShipLevel shipLevel)
         {
-
             switch (shipLevel)
             {
                 default:
