@@ -3,6 +3,7 @@ using System.Collections.ObjectModel;
 using Windows.UI.Xaml.Controls;
 using SpaceInvaders.Model.EnemyShips;
 using SpaceInvaders.Model.Enum_Classes;
+using System.Linq;
 
 namespace SpaceInvaders.Model.Manager_Classes
 {
@@ -107,23 +108,22 @@ namespace SpaceInvaders.Model.Manager_Classes
         /// <returns>true if the player ship is destroyed, false otherwise.</returns>
         public bool CheckForCollisionWithPlayerShip(GameObject playerShip)
         {
-            foreach (var bullet in this.Bullets)
+            var collisionBullet = from bullet in this.Bullets where bullet.collidesWith(playerShip) select bullet;
+            var result = false;
+            foreach (var bullet in collisionBullet)
             {
                 if (this.wasNotFiredFromAPlayersShip(bullet))
                 {
-                    if (bullet.collidesWith(playerShip))
-                    {
-                        bullet.IsDestroyed = true;
-                        playerShip.IsDestroyed = true;
+                    bullet.IsDestroyed = true;
+                    playerShip.IsDestroyed = true;
 
-                        this.BackgroundCanvas.Children.Remove(playerShip.Sprite);
-                        this.BackgroundCanvas.Children.Remove(bullet.Sprite);
-                        return true;
-                    }
+                    this.BackgroundCanvas.Children.Remove(playerShip.Sprite);
+                    this.BackgroundCanvas.Children.Remove(bullet.Sprite);
+
+                    result = true;
                 }
             }
-
-            return false;
+            return result;
         }
 
         private bool wasNotFiredFromAPlayersShip(Bullet bullet)
@@ -136,29 +136,15 @@ namespace SpaceInvaders.Model.Manager_Classes
         /// </summary>
         /// <param name="enemyShips">The enemy ships.</param>
         /// <returns>true if an enemy ship was destroyed, false otherwise.</returns>
-        public bool CheckForCollisionsWithEnemyShips(ICollection<EnemyShip> enemyShips)
+        public bool CheckForCollisionsWithEnemyShips(Collection<EnemyShip> enemyShips)
         {
-            foreach (var ship in enemyShips)
+            foreach (var bullet in this.Bullets)
             {
-                foreach (var bullet in this.Bullets)
+                if (this.doesBulletHitAnyEnemyShips(bullet, enemyShips))
                 {
-                    if (this.wasNotFiredFromAnEnemyShip(bullet))
-                    {
-                        if (bullet.collidesWith(ship))
-                        {
-                            bullet.IsDestroyed = true;
-                            ship.IsDestroyed = true;
-
-                            this.BackgroundCanvas.Children.Remove(ship.Sprite);
-                            this.BackgroundCanvas.Children.Remove(bullet.Sprite);
-
-                            this.Bullets.Remove(bullet);
-                            return true;
-                        }
-                    }
+                    return true;
                 }
             }
-
             return false;
         }
 
@@ -167,6 +153,19 @@ namespace SpaceInvaders.Model.Manager_Classes
             return bullet.HomeShipType != ShipType.Enemy;
         }
 
+        private bool doesBulletHitAnyEnemyShips(Bullet bullet, Collection<EnemyShip> enemyShips)
+        {
+            foreach (var enemyShip in enemyShips)
+            {
+                if (bullet.collidesWith(enemyShip) && this.wasNotFiredFromAnEnemyShip(bullet))
+                {
+                    enemyShip.IsDestroyed = true;
+                    bullet.IsDestroyed = true;
+                    return true;
+                }
+            }
+            return false;
+        }
         #endregion
     }
 }
