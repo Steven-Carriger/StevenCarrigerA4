@@ -12,7 +12,7 @@ namespace SpaceInvaders.Model.Manager_Classes
         #region Data members
 
         private const int LimitPerRow = 4;
-        private const int NumberOfRows = 3;
+        private const int NumberOfRows = 4;
         private const int HalfOfRowLimit = LimitPerRow / 2;
 
         private const int ChanceToFireTheGun = 100;
@@ -161,7 +161,7 @@ namespace SpaceInvaders.Model.Manager_Classes
         private void addEnemies()
         {
             var shipsAdded = 0;
-            var currentRow = Row.BottomRow;
+            var currentRow = Row.FirstRow;
 
             while (shipsAdded < this.MaxNumberOfEnemyShips)
             {
@@ -170,16 +170,21 @@ namespace SpaceInvaders.Model.Manager_Classes
 
                 if (this.hasAddedMaximumShipsForCurrentRow(shipsAdded))
                 {
-                    switch (currentRow)
-                    {
-                        case Row.BottomRow:
-                            currentRow = Row.MiddleRow;
-                            break;
-                        case Row.MiddleRow:
-                            currentRow = Row.TopRow;
-                            break;
-                    }
+                    currentRow = this.changeRow(currentRow);
                 }
+            }
+        }
+
+        private Row changeRow(Row currentRow)
+        {
+            switch (currentRow)
+            {
+                default:
+                    return Row.SecondRow;
+                case Row.SecondRow:
+                    return Row.ThirdRow;
+                case Row.ThirdRow:
+                    return Row.FourthRow;
             }
         }
 
@@ -210,17 +215,22 @@ namespace SpaceInvaders.Model.Manager_Classes
 
         private void addEnemy(Row enemyRow)
         {
-            if (enemyRow == Row.BottomRow)
+            switch (enemyRow)
             {
-                this.EnemyShips.Add(EnemyShipFactory.MakeEnemyShip(ShipLevel.LevelOne));
-            }
-            else if (enemyRow == Row.MiddleRow)
-            {
-                this.EnemyShips.Add(EnemyShipFactory.MakeEnemyShip(ShipLevel.LevelTwo));
-            }
-            else if (enemyRow == Row.TopRow)
-            {
-                this.EnemyShips.Add(EnemyShipFactory.MakeEnemyShip(ShipLevel.LevelThree));
+                case Row.FirstRow:
+                    this.EnemyShips.Add(EnemyShipFactory.MakeEnemyShip(ShipLevel.LevelOne));
+                    break;
+                case Row.SecondRow:
+                    this.EnemyShips.Add(EnemyShipFactory.MakeEnemyShip(ShipLevel.LevelTwo));
+                    break;
+                case Row.ThirdRow:
+                    this.EnemyShips.Add(EnemyShipFactory.MakeEnemyShip(ShipLevel.LevelThree));
+                    break;
+                case Row.FourthRow:
+                    this.EnemyShips.Add(EnemyShipFactory.MakeEnemyShip(ShipLevel.LevelFour));
+                    break;
+                default:
+                    break;
             }
         }
 

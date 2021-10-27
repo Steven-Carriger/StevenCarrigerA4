@@ -18,6 +18,11 @@
         /// <summary>
         ///     The advance score value for a ship
         /// </summary>
-        AdvanceValue = 500
+        AdvanceValue = 500,
+
+        /// <summary>
+        ///     The challenging score value for a ship
+        /// </summary>
+        ChallengingValue = 650
     }
 }

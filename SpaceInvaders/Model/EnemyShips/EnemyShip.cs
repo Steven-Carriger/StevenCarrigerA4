@@ -63,7 +63,7 @@ namespace SpaceInvaders.Model.EnemyShips
         {
             this.SetSpeed(SpeedXDirection, SpeedYDirection);
             this.IsDestroyed = false;
-            this.ShipRow = Row.BottomRow;
+            this.ShipRow = Row.FirstRow;
             this.ScoreValue = ScoreValue.Default;
             this.ShipType = ShipType.Enemy;
         }

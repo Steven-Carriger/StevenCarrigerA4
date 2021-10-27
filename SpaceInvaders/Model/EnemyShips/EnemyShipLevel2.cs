@@ -19,7 +19,7 @@ namespace SpaceInvaders.Model.EnemyShips
             this.Sprite = new EnemyShipSpriteLevel2();
             this.ScoreValue = ScoreValue.AverageValue;
             this.ShipLevel = ShipLevel.LevelTwo;
-            this.ShipRow = Row.MiddleRow;
+            this.ShipRow = Row.SecondRow;
         }
 
         #endregion

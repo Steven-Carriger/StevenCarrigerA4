@@ -17,7 +17,7 @@ namespace SpaceInvaders.Model.EnemyShips
         public EnemyShipLevel1()
         {
             this.Sprite = new EnemyShipSpriteLevel1();
-            this.ShipRow = Row.BottomRow;
+            this.ShipRow = Row.FirstRow;
         }
 
         #endregion

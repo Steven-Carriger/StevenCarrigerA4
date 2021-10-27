@@ -31,6 +31,8 @@ namespace SpaceInvaders.Model.EnemyShips
                 case ShipLevel.LevelThree:
                     return new EnemyShipLevel3();
 
+                case ShipLevel.LevelFour:
+                    return new EnemyShipLevel4();
             }
         }
     }

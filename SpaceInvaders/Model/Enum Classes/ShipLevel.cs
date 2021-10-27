@@ -10,6 +10,9 @@
         LevelTwo,
 
         /// <summary> level three, a challenging level for the enemy ship </summary>
-        LevelThree
+        LevelThree,
+
+        /// <summary> level four, one of the most difficult enemy level ships to go against</summary>
+        LevelFour
     }
 }

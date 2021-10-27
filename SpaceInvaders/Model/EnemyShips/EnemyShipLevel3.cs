@@ -19,7 +19,7 @@ namespace SpaceInvaders.Model.EnemyShips
             this.Sprite = new EnemyShipSpriteLevel3();
             this.ScoreValue = ScoreValue.AdvanceValue;
             this.ShipLevel = ShipLevel.LevelThree;
-            this.ShipRow = Row.TopRow;
+            this.ShipRow = Row.ThirdRow;
             this.CanFire = true;
         }
 
