@@ -37,8 +37,6 @@ namespace SpaceInvaders.Model.Manager_Classes
 
         private Canvas BackgroundCanvas { get; }
 
-        private double halfWidthOfCanvas => this.BackgroundCanvas.Width / 2;
-
         /// <summary> Gets a value indicating whether [are all enemy ships destroyed]. </summary>
         /// <value> <c>true</c> if [all ships are destroyed]; otherwise, <c>false</c>. </value>
         public bool AreAllShipsDestroyed => this.EnemyShips.Count == 0;
@@ -60,6 +58,8 @@ namespace SpaceInvaders.Model.Manager_Classes
         private int fourthRowLimit { get; set; }
 
         private int currentRowLimit { get; set; }
+
+        private FrameNumber currentFrame { get; set; }
 
         /// <summary>
         /// a function that handles when the score is updated.
@@ -85,6 +85,7 @@ namespace SpaceInvaders.Model.Manager_Classes
             this.EnemyShips = new Collection<EnemyShip>();
             this.ScoreValueOfDestroyedShips = 0;
             this.BackgroundCanvas = background;
+            this.currentFrame = FrameNumber.FrameOne;
             this.addLimits();
             this.addEnemies();
             this.placeEnemyShips();
@@ -148,6 +149,9 @@ namespace SpaceInvaders.Model.Manager_Classes
         /// </summary>
         public void TakeAStep()
         {
+            this.removeDestroyedShips();
+            this.changeShipAnimation();
+
             if (this.areShipsDoneMoving())
             {
                 this.MoveShipsDown();
@@ -163,8 +167,22 @@ namespace SpaceInvaders.Model.Manager_Classes
                 this.MoveShipsRight();
                 this.stepsTaken++;
             }
+        }
 
-            this.removeDestroyedShips();
+        private void changeShipAnimation()
+        {
+            foreach (var ship in this.EnemyShips)
+            {
+                this.BackgroundCanvas.Children.Remove(ship.Sprite);
+                ship.changeAppearance(EnemyShipFactory.MakeSprite(this.currentFrame, ship.ShipLevel));
+                this.BackgroundCanvas.Children.Add(ship.Sprite);
+            }
+            this.changeFrame();
+        }
+
+        private void changeFrame()
+        {
+            this.currentFrame = this.currentFrame == FrameNumber.FrameOne ? FrameNumber.FrameTwo : FrameNumber.FrameOne;
         }
 
         private bool areShipsDoneMoving()
@@ -301,10 +319,7 @@ namespace SpaceInvaders.Model.Manager_Classes
 
         private void onScoreUpdated()
         {
-            if (this.ScoreUpdated != null)
-            {
-                this.ScoreUpdated(this.ScoreValueOfDestroyedShips);
-            }
+            this.ScoreUpdated?.Invoke(this.ScoreValueOfDestroyedShips);
         }
 
         private double findNextFourthRowX(EnemyShip ship, double startingCord)

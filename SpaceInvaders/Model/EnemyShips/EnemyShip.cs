@@ -1,4 +1,5 @@
 ﻿using SpaceInvaders.Model.Enum_Classes;
+using SpaceInvaders.View.Sprites;
 
 namespace SpaceInvaders.Model.EnemyShips
 {
@@ -86,6 +87,10 @@ namespace SpaceInvaders.Model.EnemyShips
             return null;
         }
 
+        public void changeAppearance(BaseSprite sprite)
+        {
+            this.Sprite = sprite;
+        }
         #endregion
     }
 }

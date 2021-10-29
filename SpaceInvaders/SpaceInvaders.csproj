@@ -123,6 +123,7 @@
     <Compile Include="Model\EnemyShips\EnemyShipFactory.cs" />
     <Compile Include="Model\EnemyShips\EnemyShip.cs" />
     <Compile Include="Model\EnemyShips\EnemyShipLevel4.cs" />
+    <Compile Include="Model\Enum Classes\FrameNumber.cs" />
     <Compile Include="Model\Enum Classes\ShipType.cs" />
     <Compile Include="Model\Manager Classes\BulletManager.cs" />
     <Compile Include="Model\Manager Classes\PlayerShipManager.cs" />
@@ -143,18 +144,30 @@
     <Compile Include="View\Sprites\BaseSprite.xaml.cs">
       <DependentUpon>BaseSprite.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\Sprites\EnemySprites\EnemyShipSpriteLevel4.xaml.cs">
-      <DependentUpon>EnemyShipSpriteLevel4.xaml</DependentUpon>
+    <Compile Include="View\Sprites\EnemySprites\FirstFrameSprites\EnemyShipSpriteLevel4Frame1.xaml.cs">
+      <DependentUpon>EnemyShipSpriteLevel4Frame1.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Sprites\EnemySprites\SecondFrameSprites\EnemyShipSpriteLevel1Frame2.xaml.cs">
+      <DependentUpon>EnemyShipSpriteLevel1Frame2.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Sprites\EnemySprites\SecondFrameSprites\EnemyShipSpriteLevel2Frame2.xaml.cs">
+      <DependentUpon>EnemyShipSpriteLevel2Frame2.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Sprites\EnemySprites\SecondFrameSprites\EnemyShipSpriteLevel3Frame2.xaml.cs">
+      <DependentUpon>EnemyShipSpriteLevel3Frame2.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Sprites\EnemySprites\SecondFrameSprites\EnemyShipSpriteLevel4Frame2.xaml.cs">
+      <DependentUpon>EnemyShipSpriteLevel4Frame2.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\Sprites\ISpriteRender.cs" />
-    <Compile Include="View\Sprites\EnemySprites\EnemyShipSpriteLevel1.xaml.cs">
-      <DependentUpon>EnemyShipSpriteLevel1.xaml</DependentUpon>
+    <Compile Include="View\Sprites\EnemySprites\FirstFrameSprites\EnemyShipSpriteLevel1Frame1.xaml.cs">
+      <DependentUpon>EnemyShipSpriteLevel1Frame1.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\Sprites\EnemySprites\EnemyShipSpriteLevel2.xaml.cs">
-      <DependentUpon>EnemyShipSpriteLevel2.xaml</DependentUpon>
+    <Compile Include="View\Sprites\EnemySprites\FirstFrameSprites\EnemyShipSpriteLevel2Frame1.xaml.cs">
+      <DependentUpon>EnemyShipSpriteLevel2Frame1.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\Sprites\EnemySprites\EnemyShipSpriteLevel3.xaml.cs">
-      <DependentUpon>EnemyShipSpriteLevel3.xaml</DependentUpon>
+    <Compile Include="View\Sprites\EnemySprites\FirstFrameSprites\EnemyShipSpriteLevel3Frame1.xaml.cs">
+      <DependentUpon>EnemyShipSpriteLevel3Frame1.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\Sprites\BulletSprite.xaml.cs">
       <DependentUpon>BulletSprite.xaml</DependentUpon>
@@ -192,15 +205,15 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="View\Sprites\EnemySprites\EnemyShipSpriteLevel1.xaml">
+    <Page Include="View\Sprites\EnemySprites\FirstFrameSprites\EnemyShipSpriteLevel1Frame1.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="View\Sprites\EnemySprites\EnemyShipSpriteLevel2.xaml">
+    <Page Include="View\Sprites\EnemySprites\FirstFrameSprites\EnemyShipSpriteLevel2Frame1.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="View\Sprites\EnemySprites\EnemyShipSpriteLevel3.xaml">
+    <Page Include="View\Sprites\EnemySprites\FirstFrameSprites\EnemyShipSpriteLevel3Frame1.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -208,7 +221,23 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="View\Sprites\EnemySprites\EnemyShipSpriteLevel4.xaml">
+    <Page Include="View\Sprites\EnemySprites\FirstFrameSprites\EnemyShipSpriteLevel4Frame1.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Sprites\EnemySprites\SecondFrameSprites\EnemyShipSpriteLevel1Frame2.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Sprites\EnemySprites\SecondFrameSprites\EnemyShipSpriteLevel2Frame2.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Sprites\EnemySprites\SecondFrameSprites\EnemyShipSpriteLevel3Frame2.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Sprites\EnemySprites\SecondFrameSprites\EnemyShipSpriteLevel4Frame2.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -228,6 +257,7 @@
   <ItemGroup>
     <WCFMetadata Include="Connected Services\" />
   </ItemGroup>
+  <ItemGroup />
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>
   </PropertyGroup>

@@ -186,18 +186,12 @@ namespace SpaceInvaders.Model.Manager_Classes
 
         private void onUpdateScoreEvent(int score)
         {
-            if (this.ScoreUpdated != null)
-            {
-                this.ScoreUpdated(score);
-            }
+            this.ScoreUpdated?.Invoke(score);
         }
 
         private void onGamedEndedEvent()
         {
-            if (this.GameEnded != null)
-            {
-                this.GameEnded();
-            }
+            this.GameEnded?.Invoke();
         }
         #endregion
     }

@@ -13,7 +13,7 @@ namespace SpaceInvaders.Model.EnemyShips
     {
         public EnemyShipLevel4()
         {
-            this.Sprite = new EnemyShipSpriteLevel4();
+            this.Sprite = new EnemyShipSpriteLevel4Frame1();
             this.ScoreValue = ScoreValue.ChallengingValue;
             this.ShipLevel = ShipLevel.LevelFour;
             this.ShipRow = Row.FourthRow;
