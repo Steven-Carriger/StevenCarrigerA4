@@ -14,6 +14,7 @@ namespace SpaceInvaders.Model
         private const int SpeedXDirection = 10;
         private const int SpeedYDirection = 0;
 
+        private const int MaxNumberOfPlayerShots = 3;
         #endregion
 
         #region Properties
@@ -21,12 +22,20 @@ namespace SpaceInvaders.Model
         private ShipType ShipType { get; }
 
         /// <summary>
+        /// Gets or sets the number of shots fired from this ship
+        /// </summary>
+        /// <value>
+        /// The number of shots fired. 
+        /// </value>
+        public int numberShotsFired { get; set; }
+
+        /// <summary>
         ///     Gets or sets a value indicating whether the player ship has fired.
         /// </summary>
         /// <value>
-        ///     <c>true</c> if the player ship has fired; otherwise, <c>false</c>.
+        ///     <c>true</c> if the player ship can fire; otherwise, <c>false</c>.
         /// </value>
-        public bool HasFired { get; set; }
+        public bool CanFire => numberShotsFired < MaxNumberOfPlayerShots;
 
         #endregion
 
@@ -37,7 +46,8 @@ namespace SpaceInvaders.Model
         /// </summary>
         public PlayerShip()
         {
-            Sprite = new PlayerShipSprite();
+            this.Sprite = new PlayerShipSprite();
+            this.numberShotsFired = 0;
             SetSpeed(SpeedXDirection, SpeedYDirection);
             this.ShipType = ShipType.Player;
         }
@@ -52,9 +62,9 @@ namespace SpaceInvaders.Model
         /// <returns>the bullet that was fired, null if the bullet could not be fired.</returns>
         public Bullet Fire()
         {
-            if (!this.HasFired)
+            if (this.CanFire)
             {
-                this.HasFired = true;
+                this.numberShotsFired++;
                 return new Bullet(this.ShipType, this);
             }
 

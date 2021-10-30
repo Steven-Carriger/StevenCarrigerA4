@@ -11,11 +11,24 @@ namespace SpaceInvaders.Model.Manager_Classes
         private const int LeftBackgroundBoundary = 0;
         private readonly double backgroundWidth;
 
-        public Canvas BackgroundCanvas { get; }
-
         #endregion
 
         #region Properties
+        /// <summary>
+        /// Gets the background canvas.
+        /// </summary>
+        /// <value>
+        /// The background canvas.
+        /// </value>
+        public Canvas BackgroundCanvas { get; }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether the ship [just fired].
+        /// </summary>
+        /// <value>
+        ///   <c>true</c> if [just fired]; otherwise, <c>false</c>.
+        /// </value>
+        public bool justFired { get; set; }
 
         /// <summary>
         ///     Gets a value indicating whether the player ship was hit.
@@ -48,6 +61,7 @@ namespace SpaceInvaders.Model.Manager_Classes
         {
             this.BackgroundCanvas = background;
             this.backgroundWidth = this.BackgroundCanvas.Width;
+            this.justFired = false;
             this.createPlayerShip();
             this.placePlayerNearTheBottomCenter();
         }
@@ -98,20 +112,13 @@ namespace SpaceInvaders.Model.Manager_Classes
         }
 
         /// <summary>
-        ///     Toggles the player ships gun.
+        ///     Toggles the player ships gun to where the playership can fire another bullet.
         ///     pre condition: none
-        ///     post condition: if the property was true it will be false, if it were false it would be toggled to true.
+        ///     post condition: player ship can fire an additional round again.
         /// </summary>
         public void TogglePlayerShipsGun()
         {
-            if (this.PlayerShip.HasFired)
-            {
-                this.PlayerShip.HasFired = false;
-            }
-            else
-            {
-                this.PlayerShip.HasFired = true;
-            }
+            this.PlayerShip.numberShotsFired--;
         }
 
         private bool isPlayerShipNotNearRightBoundary()

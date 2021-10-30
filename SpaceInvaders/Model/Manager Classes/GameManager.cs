@@ -11,17 +11,11 @@ namespace SpaceInvaders.Model.Manager_Classes
 
         private readonly EnemyShipManager enemyShipManager;
         private readonly PlayerShipManager playerShipManager;
-
-        /// <summary>
-        /// Gets the background canvas.
-        /// </summary>
-        /// <value>
-        /// The background canvas.
-        /// </value>
-        public Canvas BackgroundCanvas { get; }
-
         private readonly BulletManager bulletManager;
 
+        #endregion
+
+        #region Properties
         /// <summary>
         /// a function that handles when the score is updated
         /// </summary>
@@ -42,9 +36,14 @@ namespace SpaceInvaders.Model.Manager_Classes
         /// Occurs when [game ended].
         /// </summary>
         public event GameEndedHandler GameEnded;
-        #endregion
 
-        #region Properties
+        /// <summary>
+        /// Gets the background canvas.
+        /// </summary>
+        /// <value>
+        /// The background canvas.
+        /// </value>
+        public Canvas BackgroundCanvas { get; }
 
         /// <summary>
         ///     Gets a value indicating whether [did player win].
@@ -85,7 +84,6 @@ namespace SpaceInvaders.Model.Manager_Classes
             this.BackgroundCanvas = background;
 
             this.createTimer();
-
             this.enemyShipManager.ScoreUpdated += new EnemyShipManager.ScoreUpdatedHandler(this.onUpdateScoreEvent);
         }
 
@@ -118,7 +116,11 @@ namespace SpaceInvaders.Model.Manager_Classes
         /// </summary>
         public void FirePlayerShipsGun()
         {
-            this.bulletManager.addBullet(this.playerShipManager.FirePlayerShip());
+            if (!this.playerShipManager.justFired)
+            {
+                this.bulletManager.addBullet(this.playerShipManager.FirePlayerShip());
+                this.playerShipManager.justFired = true;
+            }
         }
 
         private void makeEnemyShipsTakeAStep()
@@ -172,6 +174,7 @@ namespace SpaceInvaders.Model.Manager_Classes
             this.fireEnemyShips();
             this.updateBullets();
 
+            this.playerShipManager.justFired = false;
             if (this.isGameOver())
             {
                 this.timer.Stop();

@@ -79,7 +79,7 @@ namespace SpaceInvaders.View
 
         private void endGame()
         {
-            this.toggleShipsVisibility();
+            this.toggleGameObjectsVisibility();
             this.toggleEndOfGameTextBoxes();
             this.ScoreLabel.Visibility = Visibility.Collapsed;
             this.GameStatTextBlock.Text = this.gameManager.DidPlayerLose
@@ -87,7 +87,7 @@ namespace SpaceInvaders.View
                 : $"Congratulations, you won!{Environment.NewLine}Your {this.ScoreLabel.Text}";
         }
 
-        private void toggleShipsVisibility()
+        private void toggleGameObjectsVisibility()
         {
             foreach (var sprite in this.theCanvas.Children)
             {
