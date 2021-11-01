@@ -87,6 +87,10 @@ namespace SpaceInvaders.Model.EnemyShips
             return null;
         }
 
+        /// <summary>
+        /// Changes the appearance of the ship to another provided.
+        /// </summary>
+        /// <param name="sprite">The sprite to change to.</param>
         public void changeAppearance(BaseSprite sprite)
         {
             this.Sprite = sprite;

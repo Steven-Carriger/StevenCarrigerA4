@@ -15,6 +15,7 @@ namespace SpaceInvaders.Model
         private const int SpeedYDirection = 0;
 
         private const int MaxNumberOfPlayerShots = 3;
+        private const int MaxPlayerLives = 3;
         #endregion
 
         #region Properties
@@ -36,7 +37,14 @@ namespace SpaceInvaders.Model
         ///     <c>true</c> if the player ship can fire; otherwise, <c>false</c>.
         /// </value>
         public bool CanFire => numberShotsFired < MaxNumberOfPlayerShots;
-
+        
+        /// <summary>
+        /// Gets or sets the number of lives remaining for the player ship.
+        /// </summary>
+        /// <value>
+        /// The number of lives remaining.
+        /// </value>
+        public int numberOfLivesRemaining { get; set;}
         #endregion
 
         #region Constructors
@@ -48,6 +56,7 @@ namespace SpaceInvaders.Model
         {
             this.Sprite = new PlayerShipSprite();
             this.numberShotsFired = 0;
+            this.numberOfLivesRemaining = MaxPlayerLives;
             SetSpeed(SpeedXDirection, SpeedYDirection);
             this.ShipType = ShipType.Player;
         }

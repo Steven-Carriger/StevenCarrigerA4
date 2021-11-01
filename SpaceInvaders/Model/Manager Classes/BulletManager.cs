@@ -12,7 +12,7 @@ namespace SpaceInvaders.Model.Manager_Classes
     {
         #region Properties
 
-        private ICollection<Bullet> Bullets { get; }
+        private Collection<Bullet> Bullets { get; }
 
         private Canvas BackgroundCanvas { get; }
         #endregion
@@ -115,15 +115,25 @@ namespace SpaceInvaders.Model.Manager_Classes
                 if (this.wasNotFiredFromAPlayersShip(bullet))
                 {
                     bullet.IsDestroyed = true;
-                    playerShip.IsDestroyed = true;
 
-                    this.BackgroundCanvas.Children.Remove(playerShip.Sprite);
                     this.BackgroundCanvas.Children.Remove(bullet.Sprite);
 
                     result = true;
                 }
             }
+            this.RemoveDestroyedBullets();
             return result;
+        }
+
+        private void RemoveDestroyedBullets()
+        {
+            for (int index = 0; index < this.Bullets.Count; index++)
+            {
+                if (this.Bullets[index].IsDestroyed)
+                {
+                    this.Bullets.Remove(Bullets[index]);
+                }
+            }
         }
 
         private bool wasNotFiredFromAPlayersShip(Bullet bullet)

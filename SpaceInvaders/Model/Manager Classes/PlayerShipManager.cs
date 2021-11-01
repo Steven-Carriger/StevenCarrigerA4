@@ -9,11 +9,12 @@ namespace SpaceInvaders.Model.Manager_Classes
 
         private const double PlayerShipBottomOffset = 30;
         private const int LeftBackgroundBoundary = 0;
-        private readonly double backgroundWidth;
 
         #endregion
 
         #region Properties
+        private double BackgroundWidth {get; set;}
+
         /// <summary>
         /// Gets the background canvas.
         /// </summary>
@@ -31,12 +32,12 @@ namespace SpaceInvaders.Model.Manager_Classes
         public bool justFired { get; set; }
 
         /// <summary>
-        ///     Gets a value indicating whether the player ship was hit.
+        ///     Gets a value indicating whether the player ship was destroyed.
         /// </summary>
         /// <value>
-        ///     <c>true</c> if [was player hit]; otherwise, <c>false</c>.
+        ///     <c>true</c> if [player was destroyed]; otherwise, <c>false</c>.
         /// </value>
-        public bool WasPlayerHit => this.PlayerShip.IsDestroyed;
+        public bool WasPlayerDestroyed => this.PlayerShip.IsDestroyed;
 
         /// <summary>
         ///     Gets or sets the player ship.
@@ -45,7 +46,14 @@ namespace SpaceInvaders.Model.Manager_Classes
         ///     The player ship.
         /// </value>
         public PlayerShip PlayerShip { get; set; }
-
+        
+        /// <summary>
+        /// Gets or sets the player ships lives.
+        /// </summary>
+        /// <value>
+        /// The player ships lives.
+        /// </value>
+        public int playerShipsLives => this.PlayerShip.numberOfLivesRemaining;
         #endregion
 
         #region Constructors
@@ -60,8 +68,10 @@ namespace SpaceInvaders.Model.Manager_Classes
         public PlayerShipManager(Canvas background)
         {
             this.BackgroundCanvas = background;
-            this.backgroundWidth = this.BackgroundCanvas.Width;
+            this.BackgroundWidth = this.BackgroundCanvas.Width;
+
             this.justFired = false;
+
             this.createPlayerShip();
             this.placePlayerNearTheBottomCenter();
         }
@@ -121,9 +131,22 @@ namespace SpaceInvaders.Model.Manager_Classes
             this.PlayerShip.numberShotsFired--;
         }
 
+        /// <summary>
+        /// Handles the player getting hit.
+        /// </summary>
+        public void HandlePlayerGettingHit()
+        {
+            this.PlayerShip.numberOfLivesRemaining--;
+
+            if (this.playerShipsLives == 0)
+            {
+                this.PlayerShip.IsDestroyed = true;
+            }
+        }
+
         private bool isPlayerShipNotNearRightBoundary()
         {
-            return this.backgroundWidth > this.PlayerShip.X + this.PlayerShip.Width + this.PlayerShip.SpeedX;
+            return this.BackgroundWidth > this.PlayerShip.X + this.PlayerShip.Width + this.PlayerShip.SpeedX;
         }
 
         private bool isPlayerShipNotNearLeftBoundary()

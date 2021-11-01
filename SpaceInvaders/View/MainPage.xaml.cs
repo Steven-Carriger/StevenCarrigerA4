@@ -47,10 +47,16 @@ namespace SpaceInvaders.View
             Window.Current.CoreWindow.KeyDown += this.coreWindowOnKeyDown;
 
             this.gameManager = new GameManager(this.theCanvas);
-            this.toggleEndOfGameTextBoxes();
 
+            this.toggleEndOfGameTextBoxes();
+            this.CreateEventListeners();
+        }
+
+        private void CreateEventListeners()
+        {
             this.gameManager.ScoreUpdated += new GameManager.UpdateScoreHandler(this.updateScore);
             this.gameManager.GameEnded += new GameManager.GameEndedHandler(this.endGame);
+            this.gameManager.PlayerHit += new GameManager.PlayerWasHitHandler(this.updatePlayerLives);
         }
 
         #endregion
@@ -74,17 +80,28 @@ namespace SpaceInvaders.View
 
         private void updateScore(int score)
         {
-            this.ScoreLabel.Text = $"Score: {score}";
+            this.ScoreLabel.Text = $"Your Score: {score}";
+        }
+
+        private void updatePlayerLives(int lives)
+        {
+            this.PlayerLivesLabel.Text = $"Your Lives: {lives}";
         }
 
         private void endGame()
         {
             this.toggleGameObjectsVisibility();
             this.toggleEndOfGameTextBoxes();
-            this.ScoreLabel.Visibility = Visibility.Collapsed;
+            this.toggleLabels();
             this.GameStatTextBlock.Text = this.gameManager.DidPlayerLose
-                ? $"You Lost, better luck next time!{Environment.NewLine}Your {this.ScoreLabel.Text}"
-                : $"Congratulations, you won!{Environment.NewLine}Your {this.ScoreLabel.Text}";
+                ? $"You Lost, better luck next time!{Environment.NewLine}{this.ScoreLabel.Text}"
+                : $"Congratulations, you won!{Environment.NewLine}{this.ScoreLabel.Text}";
+        }
+
+        private void toggleLabels()
+        {
+            this.ScoreLabel.Visibility = Visibility.Collapsed;
+            this.PlayerLivesLabel.Visibility = Visibility.Collapsed;
         }
 
         private void toggleGameObjectsVisibility()
