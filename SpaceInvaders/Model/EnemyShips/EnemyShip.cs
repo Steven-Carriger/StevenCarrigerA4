@@ -4,7 +4,7 @@ using SpaceInvaders.View.Sprites;
 namespace SpaceInvaders.Model.EnemyShips
 {
     /// <summary>
-    /// EnemyShip base class
+    ///     EnemyShip base class
     /// </summary>
     /// <seealso cref="SpaceInvaders.Model.GameObject" />
     public abstract class EnemyShip : GameObject
@@ -46,10 +46,10 @@ namespace SpaceInvaders.Model.EnemyShips
         public ShipLevel ShipLevel { get; set; }
 
         /// <summary>
-        /// Gets or sets a value indicating whether this ship can fire.
+        ///     Gets or sets a value indicating whether this ship can fire.
         /// </summary>
         /// <value>
-        ///   <c>true</c> if this ship can fire; otherwise, <c>false</c>.
+        ///     <c>true</c> if this ship can fire; otherwise, <c>false</c>.
         /// </value>
         public bool CanFire { get; set; }
 
@@ -79,22 +79,18 @@ namespace SpaceInvaders.Model.EnemyShips
         /// <returns>bullet to be shot towards the player if able to. null otherwise</returns>
         public Bullet Fire()
         {
-            if (this.CanFire)
-            {
-                return new Bullet(this.ShipType, this);
-            }
-
-            return null;
+            return this.CanFire ? new Bullet(this.ShipType, this) : null;
         }
 
         /// <summary>
-        /// Changes the appearance of the ship to another provided.
+        ///     Changes the appearance of the ship to another provided.
         /// </summary>
         /// <param name="sprite">The sprite to change to.</param>
-        public void changeAppearance(BaseSprite sprite)
+        public void ChangeAppearance(BaseSprite sprite)
         {
             this.Sprite = sprite;
         }
+
         #endregion
     }
 }

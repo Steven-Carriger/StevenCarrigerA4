@@ -9,27 +9,29 @@ namespace SpaceInvaders.Model.Manager_Classes
 
         private const double PlayerShipBottomOffset = 30;
         private const int LeftBackgroundBoundary = 0;
+        private const int PositionDivider = 2;
 
         #endregion
 
         #region Properties
-        private double BackgroundWidth {get; set;}
+
+        private double BackgroundWidth { get; }
 
         /// <summary>
-        /// Gets the background canvas.
+        ///     Gets the background canvas.
         /// </summary>
         /// <value>
-        /// The background canvas.
+        ///     The background canvas.
         /// </value>
         public Canvas BackgroundCanvas { get; }
 
         /// <summary>
-        /// Gets or sets a value indicating whether the ship [just fired].
+        ///     Gets or sets a value indicating whether the ship [just fired].
         /// </summary>
         /// <value>
-        ///   <c>true</c> if [just fired]; otherwise, <c>false</c>.
+        ///     <c>true</c> if [just fired]; otherwise, <c>false</c>.
         /// </value>
-        public bool justFired { get; set; }
+        public bool JustFired { get; set; }
 
         /// <summary>
         ///     Gets a value indicating whether the player ship was destroyed.
@@ -46,14 +48,15 @@ namespace SpaceInvaders.Model.Manager_Classes
         ///     The player ship.
         /// </value>
         public PlayerShip PlayerShip { get; set; }
-        
+
         /// <summary>
-        /// Gets or sets the player ships lives.
+        ///     Gets or sets the player ships lives.
         /// </summary>
         /// <value>
-        /// The player ships lives.
+        ///     The player ships lives.
         /// </value>
-        public int playerShipsLives => this.PlayerShip.numberOfLivesRemaining;
+        public int PlayerShipsLives => this.PlayerShip.NumberOfLivesRemaining;
+
         #endregion
 
         #region Constructors
@@ -70,7 +73,7 @@ namespace SpaceInvaders.Model.Manager_Classes
             this.BackgroundCanvas = background;
             this.BackgroundWidth = this.BackgroundCanvas.Width;
 
-            this.justFired = false;
+            this.JustFired = false;
 
             this.createPlayerShip();
             this.placePlayerNearTheBottomCenter();
@@ -122,23 +125,23 @@ namespace SpaceInvaders.Model.Manager_Classes
         }
 
         /// <summary>
-        ///     Toggles the player ships gun to where the playership can fire another bullet.
+        ///     Toggles the player ships gun to where the player ship can fire another bullet.
         ///     pre condition: none
         ///     post condition: player ship can fire an additional round again.
         /// </summary>
         public void TogglePlayerShipsGun()
         {
-            this.PlayerShip.numberShotsFired--;
+            this.PlayerShip.NumberShotsFired--;
         }
 
         /// <summary>
-        /// Handles the player getting hit.
+        ///     Handles the player getting hit.
         /// </summary>
         public void HandlePlayerGettingHit()
         {
-            this.PlayerShip.numberOfLivesRemaining--;
+            this.PlayerShip.NumberOfLivesRemaining--;
 
-            if (this.playerShipsLives == 0)
+            if (this.PlayerShipsLives == 0)
             {
                 this.PlayerShip.IsDestroyed = true;
             }
@@ -156,7 +159,7 @@ namespace SpaceInvaders.Model.Manager_Classes
 
         private void placePlayerNearTheBottomCenter()
         {
-            this.PlayerShip.X = this.BackgroundCanvas.Width / 2 - this.PlayerShip.Width / 2.0;
+            this.PlayerShip.X = this.BackgroundCanvas.Width / PositionDivider - this.PlayerShip.Width / PositionDivider;
             this.PlayerShip.Y = this.BackgroundCanvas.Height - this.PlayerShip.Height - PlayerShipBottomOffset;
         }
 

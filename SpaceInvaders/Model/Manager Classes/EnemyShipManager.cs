@@ -9,10 +9,21 @@ namespace SpaceInvaders.Model.Manager_Classes
     /// <summary> Manages all of the enemy ships in the game, including their placement & movement</summary>
     public class EnemyShipManager
     {
+        #region Types and Delegates
+
+        /// <summary>
+        ///     a function that handles when the score is updated.
+        /// </summary>
+        /// <param name="score">The score.</param>
+        public delegate void ScoreUpdatedHandler(int score);
+
+        #endregion
+
         #region Data members
+
         private const int MaxNumberOfEnemyShips = 20;
 
-        private const int limitScaler = 2;
+        private const int LimitScale = 2;
 
         private const int ChanceToFireTheGun = 100;
         private const int RangeOfProbability = 0;
@@ -49,28 +60,18 @@ namespace SpaceInvaders.Model.Manager_Classes
         /// </value>
         public Collection<EnemyShip> EnemyShips { get; }
 
-        private int firstRowLimit { get; set; }
+        private int FirstRowLimit { get; set; }
 
-        private int secondRowLimit { get; set; }
+        private int SecondRowLimit { get; set; }
 
-        private int thirdRowLimit { get; set; }
+        private int ThirdRowLimit { get; set; }
 
-        private int fourthRowLimit { get; set; }
+        private int FourthRowLimit { get; set; }
 
-        private int currentRowLimit { get; set; }
+        private int CurrentRowLimit { get; set; }
 
-        private FrameNumber currentFrame { get; set; }
+        private FrameNumber CurrentFrame { get; set; }
 
-        /// <summary>
-        /// a function that handles when the score is updated.
-        /// </summary>
-        /// <param name="score">The score.</param>
-        public delegate void ScoreUpdatedHandler(int score);
-
-        /// <summary>
-        /// Occurs when [score updated].
-        /// </summary>
-        public event ScoreUpdatedHandler ScoreUpdated;
         #endregion
 
         #region Constructors
@@ -85,7 +86,7 @@ namespace SpaceInvaders.Model.Manager_Classes
             this.EnemyShips = new Collection<EnemyShip>();
             this.ScoreValueOfDestroyedShips = 0;
             this.BackgroundCanvas = background;
-            this.currentFrame = FrameNumber.FrameOne;
+            this.CurrentFrame = FrameNumber.FrameOne;
             this.addLimits();
             this.addEnemies();
             this.placeEnemyShips();
@@ -95,14 +96,19 @@ namespace SpaceInvaders.Model.Manager_Classes
 
         #region Methods
 
+        /// <summary>
+        ///     Occurs when [score updated].
+        /// </summary>
+        public event ScoreUpdatedHandler ScoreUpdated;
+
         private void addLimits()
         {
-            this.firstRowLimit = (int)ShipLevel.LevelOne;
-            this.secondRowLimit = (int)ShipLevel.LevelTwo;
-            this.thirdRowLimit = (int)ShipLevel.LevelThree;
-            this.fourthRowLimit = (int)ShipLevel.LevelFour;
+            this.FirstRowLimit = (int)ShipLevel.LevelOne;
+            this.SecondRowLimit = (int)ShipLevel.LevelTwo;
+            this.ThirdRowLimit = (int)ShipLevel.LevelThree;
+            this.FourthRowLimit = (int)ShipLevel.LevelFour;
 
-            this.currentRowLimit = limitScaler;
+            this.CurrentRowLimit = LimitScale;
         }
 
         /// <summary>
@@ -174,15 +180,16 @@ namespace SpaceInvaders.Model.Manager_Classes
             foreach (var ship in this.EnemyShips)
             {
                 this.BackgroundCanvas.Children.Remove(ship.Sprite);
-                ship.changeAppearance(EnemyShipFactory.MakeSprite(this.currentFrame, ship.ShipLevel));
+                ship.ChangeAppearance(EnemyShipFactory.MakeSprite(this.CurrentFrame, ship.ShipLevel));
                 this.BackgroundCanvas.Children.Add(ship.Sprite);
             }
+
             this.changeFrame();
         }
 
         private void changeFrame()
         {
-            this.currentFrame = this.currentFrame == FrameNumber.FrameOne ? FrameNumber.FrameTwo : FrameNumber.FrameOne;
+            this.CurrentFrame = this.CurrentFrame == FrameNumber.FrameOne ? FrameNumber.FrameTwo : FrameNumber.FrameOne;
         }
 
         private bool areShipsDoneMoving()
@@ -207,24 +214,28 @@ namespace SpaceInvaders.Model.Manager_Classes
                 shipsAdded++;
                 shipsAddedOnRow++;
                 if (!this.hasAddedMaximumShipsForCurrentRow(shipsAddedOnRow))
-                { 
-                    currentRow = this.changeRow(currentRow);
+                {
+                    currentRow = changeRow(currentRow);
                     shipsAddedOnRow = 0;
-                    this.currentRowLimit += limitScaler;
+                    this.CurrentRowLimit += LimitScale;
                 }
             }
         }
 
-        private Row changeRow(Row currentRow)
+        private static Row changeRow(Row currentRow)
         {
             switch (currentRow)
             {
-                default:
+                case Row.FirstRow:
                     return Row.SecondRow;
                 case Row.SecondRow:
                     return Row.ThirdRow;
                 case Row.ThirdRow:
                     return Row.FourthRow;
+                case Row.FourthRow:
+                    return Row.FourthRow;
+                default:
+                    return Row.FirstRow;
             }
         }
 
@@ -232,7 +243,7 @@ namespace SpaceInvaders.Model.Manager_Classes
         ///     Fires the enemy ships.
         /// </summary>
         /// <returns>A bullet if one of the enemy ships fire a bullet, null otherwise</returns>
-        public Bullet fireEnemyShips()
+        public Bullet FireEnemyShips()
         {
             var randomNumberGenerator = new Random();
             foreach (var ship in this.EnemyShips)
@@ -249,7 +260,7 @@ namespace SpaceInvaders.Model.Manager_Classes
 
         private bool hasAddedMaximumShipsForCurrentRow(int totalAdded)
         {
-            return totalAdded < this.currentRowLimit;
+            return totalAdded < this.CurrentRowLimit;
         }
 
         private void addEnemy(Row enemyRow)
@@ -268,8 +279,6 @@ namespace SpaceInvaders.Model.Manager_Classes
                 case Row.FourthRow:
                     this.EnemyShips.Add(EnemyShipFactory.MakeEnemyShip(ShipLevel.LevelFour));
                     break;
-                default:
-                    break;
             }
         }
 
@@ -281,24 +290,23 @@ namespace SpaceInvaders.Model.Manager_Classes
                 switch (ship.ShipRow)
                 {
                     case Row.FirstRow:
-                        this.firstRowLimit--;
+                        this.FirstRowLimit--;
                         ship.X = this.findNextFirstRowX(ship, startingXCord);
                         break;
                     case Row.SecondRow:
-                        this.secondRowLimit--;
+                        this.SecondRowLimit--;
                         ship.X = this.findNextSecondRowX(ship, startingXCord);
                         break;
                     case Row.ThirdRow:
-                        this.thirdRowLimit--;
+                        this.ThirdRowLimit--;
                         ship.X = this.findNextThirdRowX(ship, startingXCord);
                         break;
                     case Row.FourthRow:
-                        this.fourthRowLimit--;
+                        this.FourthRowLimit--;
                         ship.X = this.findNextFourthRowX(ship, startingXCord);
                         break;
-                    default:
-                        break;
                 }
+
                 this.BackgroundCanvas.Children.Add(ship.Sprite);
                 ship.Y = (int)ship.ShipRow;
             }
@@ -322,27 +330,28 @@ namespace SpaceInvaders.Model.Manager_Classes
             this.ScoreUpdated?.Invoke(this.ScoreValueOfDestroyedShips);
         }
 
-        private double findNextFourthRowX(EnemyShip ship, double startingCord)
+        private double findNextFourthRowX(GameObject ship, double startingCord)
         {
-            startingCord -= ship.Width / limitScaler;
-            return startingCord + (ship.Width + SpaceBetweenShips) * this.fourthRowLimit;
+            startingCord -= ship.Width / LimitScale;
+            return startingCord + (ship.Width + SpaceBetweenShips) * this.FourthRowLimit;
         }
 
-        private double findNextThirdRowX(EnemyShip ship, double startingCord)
+        private double findNextThirdRowX(GameObject ship, double startingCord)
         {
-            return startingCord + (ship.Width + SpaceBetweenShips) * this.thirdRowLimit;
+            return startingCord + (ship.Width + SpaceBetweenShips) * this.ThirdRowLimit;
         }
 
-        private double findNextSecondRowX(EnemyShip ship, double startingCord)
+        private double findNextSecondRowX(GameObject ship, double startingCord)
         {
-            return startingCord + (ship.Width + SpaceBetweenShips) * this.secondRowLimit;
+            return startingCord + (ship.Width + SpaceBetweenShips) * this.SecondRowLimit;
         }
 
-        private double findNextFirstRowX(EnemyShip ship, double startingCord)
+        private double findNextFirstRowX(GameObject ship, double startingCord)
         {
-            startingCord -= ship.Width * limitScaler;
-            return startingCord + (ship.Width + SpaceBetweenShips) * this.firstRowLimit;
+            startingCord -= ship.Width * LimitScale;
+            return startingCord + (ship.Width + SpaceBetweenShips) * this.FirstRowLimit;
         }
+
         #endregion
     }
 }

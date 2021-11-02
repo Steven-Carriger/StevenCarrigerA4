@@ -49,43 +49,43 @@ namespace SpaceInvaders.View
             this.gameManager = new GameManager(this.theCanvas);
 
             this.toggleEndOfGameTextBoxes();
-            this.CreateEventListeners();
-        }
-
-        private void CreateEventListeners()
-        {
-            this.gameManager.ScoreUpdated += new GameManager.UpdateScoreHandler(this.updateScore);
-            this.gameManager.GameEnded += new GameManager.GameEndedHandler(this.endGame);
-            this.gameManager.PlayerHit += new GameManager.PlayerWasHitHandler(this.updatePlayerLives);
+            this.createEventListeners();
         }
 
         #endregion
 
         #region Methods
 
+        private void createEventListeners()
+        {
+            this.gameManager.ScoreUpdated += this.updateScore;
+            this.gameManager.GameEnded += this.endGame;
+            this.gameManager.PlayerHit += this.updatePlayerLives;
+        }
+
         private void toggleEndOfGameTextBoxes()
         {
-            if (this.GameOverTextBox.Visibility == Visibility.Collapsed &&
-                this.GameStatTextBlock.Visibility == Visibility.Collapsed)
+            if (this.gameOverTextBox.Visibility == Visibility.Collapsed &&
+                this.gameStatTextBlock.Visibility == Visibility.Collapsed)
             {
-                this.GameOverTextBox.Visibility = Visibility.Visible;
-                this.GameStatTextBlock.Visibility = Visibility.Visible;
+                this.gameOverTextBox.Visibility = Visibility.Visible;
+                this.gameStatTextBlock.Visibility = Visibility.Visible;
             }
             else
             {
-                this.GameOverTextBox.Visibility = Visibility.Collapsed;
-                this.GameStatTextBlock.Visibility = Visibility.Collapsed;
+                this.gameOverTextBox.Visibility = Visibility.Collapsed;
+                this.gameStatTextBlock.Visibility = Visibility.Collapsed;
             }
         }
 
         private void updateScore(int score)
         {
-            this.ScoreLabel.Text = $"Your Score: {score}";
+            this.scoreLabel.Text = $"Your Score: {score}";
         }
 
         private void updatePlayerLives(int lives)
         {
-            this.PlayerLivesLabel.Text = $"Your Lives: {lives}";
+            this.playerLivesLabel.Text = $"Your Lives: {lives}";
         }
 
         private void endGame()
@@ -93,15 +93,15 @@ namespace SpaceInvaders.View
             this.toggleGameObjectsVisibility();
             this.toggleEndOfGameTextBoxes();
             this.toggleLabels();
-            this.GameStatTextBlock.Text = this.gameManager.DidPlayerLose
-                ? $"You Lost, better luck next time!{Environment.NewLine}{this.ScoreLabel.Text}"
-                : $"Congratulations, you won!{Environment.NewLine}{this.ScoreLabel.Text}";
+            this.gameStatTextBlock.Text = this.gameManager.DidPlayerLose
+                ? $"You Lost, better luck next time!{Environment.NewLine}{this.scoreLabel.Text}"
+                : $"Congratulations, you won!{Environment.NewLine}{this.scoreLabel.Text}";
         }
 
         private void toggleLabels()
         {
-            this.ScoreLabel.Visibility = Visibility.Collapsed;
-            this.PlayerLivesLabel.Visibility = Visibility.Collapsed;
+            this.scoreLabel.Visibility = Visibility.Collapsed;
+            this.playerLivesLabel.Visibility = Visibility.Collapsed;
         }
 
         private void toggleGameObjectsVisibility()

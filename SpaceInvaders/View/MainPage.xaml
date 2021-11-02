@@ -8,9 +8,9 @@
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
     <Canvas x:Name="theCanvas" Width="640" Height="480" Background ="Black">
-        <TextBlock x:Name="ScoreLabel" Canvas.Left="10" Canvas.Top="443" Text="Your Score: 0" TextWrapping="Wrap" FontSize="24" FontFamily="Arial" Foreground="White" Height="27"/>
-        <TextBlock x:Name="GameOverTextBox" Canvas.Left="231" Canvas.Top="82" Text="Game Over" TextWrapping="Wrap" FontSize="36" Foreground="White"/>
-        <TextBlock x:Name="GameStatTextBlock" Canvas.Left="212" Canvas.Top="132" Text="" TextWrapping="Wrap" FontSize="16" Height="118" Width="234" Foreground="White"/>
-        <TextBlock x:Name="PlayerLivesLabel" Canvas.Left="492" Canvas.Top="443" Text="Your Lives: 3" TextWrapping="Wrap" FontSize="24" FontFamily="Arial" Foreground="White" Height="27"/>
+        <TextBlock x:Name="scoreLabel" Canvas.Left="10" Canvas.Top="443" Text="Your Score: 0" TextWrapping="Wrap" FontSize="24" FontFamily="Arial" Foreground="White" Height="27"/>
+        <TextBlock x:Name="gameOverTextBox" Canvas.Left="231" Canvas.Top="82" Text="Game Over" TextWrapping="Wrap" FontSize="36" Foreground="White"/>
+        <TextBlock x:Name="gameStatTextBlock" Canvas.Left="212" Canvas.Top="132" Text="" TextWrapping="Wrap" FontSize="16" Height="118" Width="234" Foreground="White"/>
+        <TextBlock x:Name="playerLivesLabel" Canvas.Left="492" Canvas.Top="443" Text="Your Lives: 3" TextWrapping="Wrap" FontSize="24" FontFamily="Arial" Foreground="White" Height="27"/>
     </Canvas>
 </Page>

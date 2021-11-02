@@ -7,52 +7,44 @@ namespace SpaceInvaders.Model.Manager_Classes
     /// <summary> Manages the entire game. </summary>
     public class GameManager
     {
+        #region Types and Delegates
+
+        /// <summary>
+        ///     a function that Handles when the game is over
+        /// </summary>
+        public delegate void GameEndedHandler();
+
+        /// <summary>
+        ///     a function that handles when the player is hit
+        /// </summary>
+        /// <param name="lives">The lives remaining for the player.</param>
+        public delegate void PlayerWasHitHandler(int lives);
+
+        /// <summary>
+        ///     a function that handles when the score is updated
+        /// </summary>
+        /// <param name="score">The score.</param>
+        public delegate void UpdateScoreHandler(int score);
+
+        #endregion
+
         #region Data members
 
         private readonly EnemyShipManager enemyShipManager;
         private readonly PlayerShipManager playerShipManager;
         private readonly BulletManager bulletManager;
 
+        private DispatcherTimer timer;
+
         #endregion
 
         #region Properties
-        /// <summary>
-        /// a function that handles when the score is updated
-        /// </summary>
-        /// <param name="score">The score.</param>
-        public delegate void UpdateScoreHandler(int score);
 
         /// <summary>
-        /// Occurs when [score updated].
-        /// </summary>
-        public event UpdateScoreHandler ScoreUpdated;
-
-        /// <summary>
-        /// a function that Handles when the game is over
-        /// </summary>
-        public delegate void GameEndedHandler();
-
-        /// <summary>
-        /// Occurs when [game ended].
-        /// </summary>
-        public event GameEndedHandler GameEnded;
-
-        /// <summary>
-        /// a function that handles when the player is hit
-        /// </summary>
-        /// <param name="score">The lives remaining for the player.</param>
-        public delegate void PlayerWasHitHandler(int lives);
-
-        /// <summary>
-        /// Occurs when [Player Was Hit].
-        /// </summary>
-        public event PlayerWasHitHandler PlayerHit;
-
-        /// <summary>
-        /// Gets the background canvas.
+        ///     Gets the background canvas.
         /// </summary>
         /// <value>
-        /// The background canvas.
+        ///     The background canvas.
         /// </value>
         public Canvas BackgroundCanvas { get; }
 
@@ -72,15 +64,6 @@ namespace SpaceInvaders.Model.Manager_Classes
         /// </value>
         public bool DidPlayerLose => this.playerShipManager.WasPlayerDestroyed;
 
-        /// <summary>
-        /// Gets the players lives.
-        /// </summary>
-        /// <value>
-        /// The players lives.
-        /// </value>
-        public int PlayersLives => this.playerShipManager.playerShipsLives;
-
-        private DispatcherTimer timer;
         #endregion
 
         #region Constructors
@@ -105,12 +88,27 @@ namespace SpaceInvaders.Model.Manager_Classes
 
             this.createTimer();
 
-            this.enemyShipManager.ScoreUpdated += new EnemyShipManager.ScoreUpdatedHandler(this.onUpdateScoreEvent);
+            this.enemyShipManager.ScoreUpdated += this.onUpdateScoreEvent;
         }
 
         #endregion
 
         #region Methods
+
+        /// <summary>
+        ///     Occurs when [score updated].
+        /// </summary>
+        public event UpdateScoreHandler ScoreUpdated;
+
+        /// <summary>
+        ///     Occurs when [game ended].
+        /// </summary>
+        public event GameEndedHandler GameEnded;
+
+        /// <summary>
+        ///     Occurs when [Player Was Hit].
+        /// </summary>
+        public event PlayerWasHitHandler PlayerHit;
 
         /// <summary>
         ///     Moves the player ship to the left.
@@ -137,10 +135,10 @@ namespace SpaceInvaders.Model.Manager_Classes
         /// </summary>
         public void FirePlayerShipsGun()
         {
-            if (!this.playerShipManager.justFired)
+            if (!this.playerShipManager.JustFired)
             {
-                this.bulletManager.addBullet(this.playerShipManager.FirePlayerShip());
-                this.playerShipManager.justFired = true;
+                this.bulletManager.AddBullet(this.playerShipManager.FirePlayerShip());
+                this.playerShipManager.JustFired = true;
             }
         }
 
@@ -151,7 +149,7 @@ namespace SpaceInvaders.Model.Manager_Classes
 
         private void fireEnemyShips()
         {
-            this.bulletManager.addBullet(this.enemyShipManager.fireEnemyShips());
+            this.bulletManager.AddBullet(this.enemyShipManager.FireEnemyShips());
         }
 
         private void updateBullets()
@@ -171,8 +169,9 @@ namespace SpaceInvaders.Model.Manager_Classes
             if (this.isPlayerShipHit())
             {
                 this.playerShipManager.HandlePlayerGettingHit();
-                this.onPlayerWasHit(this.playerShipManager.playerShipsLives);
+                this.onPlayerWasHit(this.playerShipManager.PlayerShipsLives);
             }
+
             if (this.isAnEnemyShipHit())
             {
                 this.playerShipManager.TogglePlayerShipsGun();
@@ -204,7 +203,7 @@ namespace SpaceInvaders.Model.Manager_Classes
             this.fireEnemyShips();
             this.updateBullets();
 
-            this.playerShipManager.justFired = false;
+            this.playerShipManager.JustFired = false;
 
             if (this.isGameOver())
             {
@@ -232,6 +231,7 @@ namespace SpaceInvaders.Model.Manager_Classes
         {
             this.PlayerHit?.Invoke(lives);
         }
+
         #endregion
     }
 }

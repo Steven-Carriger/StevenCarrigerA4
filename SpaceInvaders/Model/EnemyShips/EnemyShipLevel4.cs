@@ -1,16 +1,12 @@
-﻿using SpaceInvaders.View.Sprites;
-using SpaceInvaders.Model.Enum_Classes;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using SpaceInvaders.View.Sprites.EnemySprites;
+﻿using SpaceInvaders.Model.Enum_Classes;
+using SpaceInvaders.View.Sprites.EnemySprites.FirstFrameSprites;
 
 namespace SpaceInvaders.Model.EnemyShips
 {
     public class EnemyShipLevel4 : EnemyShipLevel3
     {
+        #region Constructors
+
         public EnemyShipLevel4()
         {
             this.Sprite = new EnemyShipSpriteLevel4Frame1();
@@ -18,5 +14,7 @@ namespace SpaceInvaders.Model.EnemyShips
             this.ShipLevel = ShipLevel.LevelFour;
             this.ShipRow = Row.FourthRow;
         }
+
+        #endregion
     }
 }

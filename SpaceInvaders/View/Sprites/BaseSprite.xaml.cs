@@ -1,7 +1,4 @@
-﻿using SpaceInvaders.Model;
-using System;
-using System.Drawing;
-using Windows.UI.Xaml.Controls;
+﻿using Windows.UI.Xaml.Controls;
 
 // The User Control item template is documented at https://go.microsoft.com/fwlink/?LinkId=234236
 
@@ -28,8 +25,8 @@ namespace SpaceInvaders.View.Sprites
         #region Methods
 
         /// <summary>
-        /// Renders user control at the specified (x,y) location in relation
-        /// to the top, left part of the canvas.
+        ///     Renders user control at the specified (x,y) location in relation
+        ///     to the top, left part of the canvas.
         /// </summary>
         /// <param name="x">The x.</param>
         /// <param name="y">The y.</param>
@@ -38,6 +35,7 @@ namespace SpaceInvaders.View.Sprites
             Canvas.SetLeft(this, x);
             Canvas.SetTop(this, y);
         }
+
         #endregion
     }
 }

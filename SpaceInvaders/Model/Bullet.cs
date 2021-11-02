@@ -36,10 +36,10 @@ namespace SpaceInvaders.Model
         /// <param name="ship">the ship that fired the bullet</param>
         public Bullet(ShipType type, GameObject ship)
         {
-            Sprite = new BulletSprite();
-            SetSpeed(SpeedXDirection, SpeedYDirection);
-            X = this.xCenteredOnTheShip(ship.X, ship.Width);
-            Y = ship.Y;
+            this.Sprite = new BulletSprite();
+            this.SetSpeed(SpeedXDirection, SpeedYDirection);
+            this.X = xCenteredOnTheShip(ship.X, ship.Width);
+            this.Y = ship.Y;
             this.HomeShipType = type;
         }
 
@@ -54,15 +54,15 @@ namespace SpaceInvaders.Model
         {
             if (this.HomeShipType == ShipType.Player)
             {
-                MoveUp();
+                this.MoveUp();
             }
             else
             {
-                MoveDown();
+                this.MoveDown();
             }
         }
 
-        private double xCenteredOnTheShip(double xValue, double shipsWidth)
+        private static double xCenteredOnTheShip(double xValue, double shipsWidth)
         {
             return xValue + shipsWidth / 2;
         }

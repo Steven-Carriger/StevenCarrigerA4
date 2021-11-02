@@ -16,6 +16,7 @@ namespace SpaceInvaders.Model
 
         private const int MaxNumberOfPlayerShots = 3;
         private const int MaxPlayerLives = 3;
+
         #endregion
 
         #region Properties
@@ -23,12 +24,12 @@ namespace SpaceInvaders.Model
         private ShipType ShipType { get; }
 
         /// <summary>
-        /// Gets or sets the number of shots fired from this ship
+        ///     Gets or sets the number of shots fired from this ship
         /// </summary>
         /// <value>
-        /// The number of shots fired. 
+        ///     The number of shots fired.
         /// </value>
-        public int numberShotsFired { get; set; }
+        public int NumberShotsFired { get; set; }
 
         /// <summary>
         ///     Gets or sets a value indicating whether the player ship has fired.
@@ -36,15 +37,16 @@ namespace SpaceInvaders.Model
         /// <value>
         ///     <c>true</c> if the player ship can fire; otherwise, <c>false</c>.
         /// </value>
-        public bool CanFire => numberShotsFired < MaxNumberOfPlayerShots;
-        
+        public bool CanFire => this.NumberShotsFired < MaxNumberOfPlayerShots;
+
         /// <summary>
-        /// Gets or sets the number of lives remaining for the player ship.
+        ///     Gets or sets the number of lives remaining for the player ship.
         /// </summary>
         /// <value>
-        /// The number of lives remaining.
+        ///     The number of lives remaining.
         /// </value>
-        public int numberOfLivesRemaining { get; set;}
+        public int NumberOfLivesRemaining { get; set; }
+
         #endregion
 
         #region Constructors
@@ -55,10 +57,12 @@ namespace SpaceInvaders.Model
         public PlayerShip()
         {
             this.Sprite = new PlayerShipSprite();
-            this.numberShotsFired = 0;
-            this.numberOfLivesRemaining = MaxPlayerLives;
-            SetSpeed(SpeedXDirection, SpeedYDirection);
+
+            this.NumberShotsFired = 0;
+            this.NumberOfLivesRemaining = MaxPlayerLives;
             this.ShipType = ShipType.Player;
+
+            SetSpeed(SpeedXDirection, SpeedYDirection);
         }
 
         #endregion
@@ -73,7 +77,7 @@ namespace SpaceInvaders.Model
         {
             if (this.CanFire)
             {
-                this.numberShotsFired++;
+                this.NumberShotsFired++;
                 return new Bullet(this.ShipType, this);
             }
 

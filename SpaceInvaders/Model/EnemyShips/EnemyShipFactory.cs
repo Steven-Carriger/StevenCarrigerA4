@@ -1,29 +1,27 @@
 ﻿using SpaceInvaders.Model.Enum_Classes;
 using SpaceInvaders.View.Sprites;
-using SpaceInvaders.View.Sprites.EnemySprites;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using SpaceInvaders.View.Sprites.EnemySprites.FirstFrameSprites;
+using SpaceInvaders.View.Sprites.EnemySprites.SecondFrameSprites;
 
 namespace SpaceInvaders.Model.EnemyShips
 {
     /// <summary>
-    /// Creates EnemyShips
+    ///     Creates EnemyShips
     /// </summary>
-    static public class EnemyShipFactory
+    public static class EnemyShipFactory
     {
+        #region Methods
+
         /// <summary>
-        /// Makes the enemy ship.
+        ///     Makes the enemy ship.
         /// </summary>
         /// <param name="shipLevel">The ship level.</param>
-        /// <returns>The enemy ship</returns>
+        /// <returns>The enemy ship returns an EnemyShipLevel1 by default</returns>
         public static EnemyShip MakeEnemyShip(ShipLevel shipLevel)
         {
             switch (shipLevel)
             {
-                default:
+                case ShipLevel.LevelOne:
                     return new EnemyShipLevel1();
 
                 case ShipLevel.LevelTwo:
@@ -34,11 +32,13 @@ namespace SpaceInvaders.Model.EnemyShips
 
                 case ShipLevel.LevelFour:
                     return new EnemyShipLevel4();
+                default:
+                    return new EnemyShipLevel1();
             }
         }
 
         /// <summary>
-        /// Makes the sprite based on the frame number.
+        ///     Makes the sprite based on the frame number.
         /// </summary>
         /// <param name="frameNumber">The frame number.</param>
         /// <param name="shipLevel">The level of the ship to make the sprite for</param>
@@ -48,17 +48,26 @@ namespace SpaceInvaders.Model.EnemyShips
             switch (shipLevel)
             {
                 case ShipLevel.LevelOne:
-                    return frameNumber == FrameNumber.FrameOne ? new EnemyShipSpriteLevel1Frame1() : (BaseSprite)new EnemyShipSpriteLevel1Frame2();
+                    return frameNumber == FrameNumber.FrameOne
+                        ? new EnemyShipSpriteLevel1Frame1()
+                        : (BaseSprite)new EnemyShipSpriteLevel1Frame2();
                 case ShipLevel.LevelTwo:
-                    return frameNumber == FrameNumber.FrameOne ? new EnemyShipSpriteLevel2Frame1() : (BaseSprite)new EnemyShipSpriteLevel2Frame2();
+                    return frameNumber == FrameNumber.FrameOne
+                        ? new EnemyShipSpriteLevel2Frame1()
+                        : (BaseSprite)new EnemyShipSpriteLevel2Frame2();
                 case ShipLevel.LevelThree:
-                    return frameNumber == FrameNumber.FrameOne ? new EnemyShipSpriteLevel3Frame1() : (BaseSprite)new EnemyShipSpriteLevel3Frame2();
+                    return frameNumber == FrameNumber.FrameOne
+                        ? new EnemyShipSpriteLevel3Frame1()
+                        : (BaseSprite)new EnemyShipSpriteLevel3Frame2();
                 case ShipLevel.LevelFour:
-                    return frameNumber == FrameNumber.FrameOne ? new EnemyShipSpriteLevel4Frame1() : (BaseSprite)new EnemyShipSpriteLevel4Frame2();
-                default:
-                    break;
+                    return frameNumber == FrameNumber.FrameOne
+                        ? new EnemyShipSpriteLevel4Frame1()
+                        : (BaseSprite)new EnemyShipSpriteLevel4Frame2();
             }
+
             return new EnemyShipSpriteLevel1Frame1();
         }
+
+        #endregion
     }
 }

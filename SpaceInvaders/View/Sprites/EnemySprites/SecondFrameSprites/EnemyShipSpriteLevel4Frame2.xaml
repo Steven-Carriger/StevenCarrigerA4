@@ -1,10 +1,11 @@
 ﻿<local:BaseSprite
-    x:Class="SpaceInvaders.View.Sprites.EnemySprites.EnemyShipSpriteLevel4Frame2"
+    x:Class="SpaceInvaders.View.Sprites.EnemySprites.SecondFrameSprites.EnemyShipSpriteLevel4Frame2"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:SpaceInvaders.View.Sprites"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:secondFrameSprites="using:SpaceInvaders.View.Sprites.EnemySprites.SecondFrameSprites"
     mc:Ignorable="d"
     d:DesignHeight="33"
     d:DesignWidth="50"
@@ -16,7 +17,7 @@
     </UserControl.Resources>
 
     <Canvas>
-        <local:EnemyShipSpriteLevel2Frame2/>
+        <secondFrameSprites:EnemyShipSpriteLevel2Frame2/>
         <Rectangle Fill="{StaticResource EnemyShipColor}" Height="26" Width="4" Canvas.Left="23"/>
         <Rectangle Fill="{StaticResource EnemyShipColor}" Height="13" Width="4" Canvas.Left="36"/>
         <Rectangle Fill="{StaticResource EnemyShipColor}" Height="13" Width="4" Canvas.Left="10"/>

@@ -1,5 +1,5 @@
 ﻿using SpaceInvaders.Model.Enum_Classes;
-using SpaceInvaders.View.Sprites;
+using SpaceInvaders.View.Sprites.EnemySprites.FirstFrameSprites;
 
 namespace SpaceInvaders.Model.EnemyShips
 {

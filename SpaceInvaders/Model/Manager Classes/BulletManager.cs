@@ -1,9 +1,8 @@
-﻿using System.Collections.Generic;
-using System.Collections.ObjectModel;
+﻿using System.Collections.ObjectModel;
+using System.Linq;
 using Windows.UI.Xaml.Controls;
 using SpaceInvaders.Model.EnemyShips;
 using SpaceInvaders.Model.Enum_Classes;
-using System.Linq;
 
 namespace SpaceInvaders.Model.Manager_Classes
 {
@@ -15,6 +14,7 @@ namespace SpaceInvaders.Model.Manager_Classes
         private Collection<Bullet> Bullets { get; }
 
         private Canvas BackgroundCanvas { get; }
+
         #endregion
 
         #region Constructors
@@ -92,7 +92,7 @@ namespace SpaceInvaders.Model.Manager_Classes
         ///     Adds the bullet to the designated canvas.
         /// </summary>
         /// <param name="bullet">The bullet to add.</param>
-        public void addBullet(Bullet bullet)
+        public void AddBullet(Bullet bullet)
         {
             if (bullet != null)
             {
@@ -108,11 +108,11 @@ namespace SpaceInvaders.Model.Manager_Classes
         /// <returns>true if the player ship is destroyed, false otherwise.</returns>
         public bool CheckForCollisionWithPlayerShip(GameObject playerShip)
         {
-            var collisionBullet = from bullet in this.Bullets where bullet.collidesWith(playerShip) select bullet;
+            var collisionBullet = from bullet in this.Bullets where bullet.CollidesWith(playerShip) select bullet;
             var result = false;
             foreach (var bullet in collisionBullet)
             {
-                if (this.wasNotFiredFromAPlayersShip(bullet))
+                if (wasNotFiredFromAPlayersShip(bullet))
                 {
                     bullet.IsDestroyed = true;
 
@@ -121,22 +121,23 @@ namespace SpaceInvaders.Model.Manager_Classes
                     result = true;
                 }
             }
-            this.RemoveDestroyedBullets();
+
+            this.removeDestroyedBullets();
             return result;
         }
 
-        private void RemoveDestroyedBullets()
+        private void removeDestroyedBullets()
         {
-            for (int index = 0; index < this.Bullets.Count; index++)
+            for (var index = 0; index < this.Bullets.Count; index++)
             {
                 if (this.Bullets[index].IsDestroyed)
                 {
-                    this.Bullets.Remove(Bullets[index]);
+                    this.Bullets.Remove(this.Bullets[index]);
                 }
             }
         }
 
-        private bool wasNotFiredFromAPlayersShip(Bullet bullet)
+        private static bool wasNotFiredFromAPlayersShip(Bullet bullet)
         {
             return ShipType.Player != bullet.HomeShipType;
         }
@@ -155,10 +156,11 @@ namespace SpaceInvaders.Model.Manager_Classes
                     return true;
                 }
             }
+
             return false;
         }
 
-        private bool wasNotFiredFromAnEnemyShip(Bullet bullet)
+        private static bool wasNotFiredFromAnEnemyShip(Bullet bullet)
         {
             return bullet.HomeShipType != ShipType.Enemy;
         }
@@ -167,7 +169,7 @@ namespace SpaceInvaders.Model.Manager_Classes
         {
             foreach (var enemyShip in enemyShips)
             {
-                if (bullet.collidesWith(enemyShip) && this.wasNotFiredFromAnEnemyShip(bullet))
+                if (bullet.CollidesWith(enemyShip) && wasNotFiredFromAnEnemyShip(bullet))
                 {
                     enemyShip.IsDestroyed = true;
                     bullet.IsDestroyed = true;
@@ -178,8 +180,10 @@ namespace SpaceInvaders.Model.Manager_Classes
                     return true;
                 }
             }
+
             return false;
         }
+
         #endregion
     }
 }

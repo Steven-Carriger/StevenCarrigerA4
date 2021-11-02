@@ -1,12 +1,12 @@
 ﻿using SpaceInvaders.Model.Enum_Classes;
-using SpaceInvaders.View.Sprites;
+using SpaceInvaders.View.Sprites.EnemySprites.FirstFrameSprites;
 
 namespace SpaceInvaders.Model.EnemyShips
 {
     /// <summary>
     ///     The most basic enemy ship class, EnemyShipLevel1.
     /// </summary>
-    /// <seealso cref="SpaceInvaders.Model.EnemyShip" />
+    /// <seealso cref="EnemyShip" />
     public class EnemyShipLevel1 : EnemyShip
     {
         #region Constructors
@@ -20,6 +20,7 @@ namespace SpaceInvaders.Model.EnemyShips
             this.ShipLevel = ShipLevel.LevelOne;
             this.ShipRow = Row.FirstRow;
         }
+
         #endregion
     }
 }

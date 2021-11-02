@@ -1,7 +1,6 @@
 ﻿using System;
 using Windows.Foundation;
 using SpaceInvaders.View.Sprites;
-using System.Collections.Generic;
 
 namespace SpaceInvaders.Model
 {
@@ -147,10 +146,10 @@ namespace SpaceInvaders.Model
         /// </summary>
         /// <param name="otherObject">The other object.</param>
         /// <returns>true if the bullet hits the other ship, false otherwise</returns>
-        public bool collidesWith(GameObject otherObject)
+        public bool CollidesWith(GameObject otherObject)
         {
-            return X < otherObject.X + otherObject.Width && X + Width > otherObject.X &&
-                   Y < otherObject.Y + otherObject.Height && Y + Height > otherObject.Y;
+            return this.X < otherObject.X + otherObject.Width && this.X + this.Width > otherObject.X &&
+                   this.Y < otherObject.Y + otherObject.Height && this.Y + this.Height > otherObject.Y;
         }
 
         private void moveX(int x)
