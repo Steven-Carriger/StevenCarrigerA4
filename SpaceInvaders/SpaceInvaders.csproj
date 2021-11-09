@@ -125,6 +125,7 @@
     <Compile Include="Model\EnemyShips\EnemyShipLevel4.cs" />
     <Compile Include="Model\Enum Classes\FrameNumber.cs" />
     <Compile Include="Model\Enum Classes\ShipType.cs" />
+    <Compile Include="Model\Manager Classes\AudioManager.cs" />
     <Compile Include="Model\Manager Classes\BulletManager.cs" />
     <Compile Include="Model\Manager Classes\PlayerShipManager.cs" />
     <Compile Include="Model\Manager Classes\EnemyShipManager.cs" />
@@ -182,6 +183,11 @@
     </AppxManifest>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Assets\explosion.wav" />
+    <Content Include="Assets\fastinvader1.wav" />
+    <Content Include="Assets\invaderkilled.wav" />
+    <Content Include="Assets\shoot.wav" />
+    <Content Include="Assets\ufo_lowpitch.wav" />
     <Content Include="Properties\Default.rd.xml" />
     <Content Include="Assets\LockScreenLogo.scale-200.png" />
     <Content Include="Assets\SplashScreen.scale-200.png" />

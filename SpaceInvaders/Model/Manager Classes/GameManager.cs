@@ -1,7 +1,8 @@
 ﻿using System;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-
+using Windows.Media.Playback;
+using Windows.Media.Core;
 namespace SpaceInvaders.Model.Manager_Classes
 {
     /// <summary> Manages the entire game. </summary>
@@ -33,6 +34,7 @@ namespace SpaceInvaders.Model.Manager_Classes
         private readonly EnemyShipManager enemyShipManager;
         private readonly PlayerShipManager playerShipManager;
         private readonly BulletManager bulletManager;
+        private readonly AudioManager audioManager;
 
         private DispatcherTimer timer;
 
@@ -83,6 +85,7 @@ namespace SpaceInvaders.Model.Manager_Classes
             this.bulletManager = new BulletManager(background);
             this.enemyShipManager = new EnemyShipManager(background);
             this.playerShipManager = new PlayerShipManager(background);
+            this.audioManager = new AudioManager();
 
             this.BackgroundCanvas = background;
 
@@ -137,6 +140,10 @@ namespace SpaceInvaders.Model.Manager_Classes
         {
             if (!this.playerShipManager.JustFired)
             {
+                if (this.playerShipManager.PlayerShip.CanFire)
+                {
+                    this.audioManager.PlayPlayerShipShooting();
+                }
                 this.bulletManager.AddBullet(this.playerShipManager.FirePlayerShip());
                 this.playerShipManager.JustFired = true;
             }
@@ -170,10 +177,15 @@ namespace SpaceInvaders.Model.Manager_Classes
             {
                 this.playerShipManager.HandlePlayerGettingHit();
                 this.onPlayerWasHit(this.playerShipManager.PlayerShipsLives);
+                if (this.playerShipManager.PlayerShipsLives == 0)
+                {
+                    this.audioManager.PlayPlayerShipExploding();
+                }
             }
 
             if (this.isAnEnemyShipHit())
             {
+                this.audioManager.PlayEnemyShipBeingDestroyed();
                 this.playerShipManager.TogglePlayerShipsGun();
             }
         }
